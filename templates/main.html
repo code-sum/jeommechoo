@@ -3,13 +3,26 @@
 
 {% block content %}
 
-
-<form action="{% url 'accounts:login' %}" method="post">
-  {% csrf_token %}
-  {% bootstrap_form forms %}
-  <input type="submit" value="제출">
-</form>
-
-
+  <!-- 로그인 div -->
+  <div>
+    <!-- 로그인한 사용자에게 보이는 div -->
+    {% if user.is_authenticated %}
+      <div>
+        <p>{{ request.user.username }}님 안녕하세요</p>
+        <a href="{% url 'accounts:logout' %}" class="btn btn-danger">
+          로그아웃
+        </a>
+      </div>
+      <!-- 로그아웃된 사용자에게 보이는 div -->
+    {% else %}
+      <div>
+        <form action="{% url 'accounts:login' %}" method="post">
+          {% csrf_token %}
+          {% bootstrap_form forms %}
+          <input type="submit" class="btn btn-primary" value="로그인">
+        </form>
+      </div>
+    {% endif %}
+  </div>
 
 {% endblock content %}
