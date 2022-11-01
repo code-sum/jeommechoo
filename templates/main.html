@@ -1,4 +1,15 @@
 {% extends 'base.html' %}
 {% load django_bootstrap5 %}
 
-{% block content %}{% endblock content %}
+{% block content %}
+
+
+<form action="{% url 'accounts:login' %}" method="post">
+  {% csrf_token %}
+  {% bootstrap_form forms %}
+  <input type="submit" value="제출">
+</form>
+
+
+
+{% endblock content %}

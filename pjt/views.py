@@ -1,4 +1,9 @@
 from django.shortcuts import render
+from django.contrib.auth.forms import AuthenticationForm
 
 def main(request):
-    return render(request, "main.html")
+    forms = AuthenticationForm()
+    context = {
+        'forms' : forms,
+    }
+    return render(request, "main.html", context)
