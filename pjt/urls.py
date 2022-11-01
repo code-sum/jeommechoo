@@ -21,4 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.main, name='main'), # 메인화면
     path('accounts/', include('accounts.urls')),
+    path('restaurants/', include('restaurants.urls')),
 ]
