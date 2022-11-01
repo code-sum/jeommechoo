@@ -9,4 +9,6 @@
     {% bootstrap_form form %}
     {% bootstrap_button button_type="submit" content="변경완료" button_class="btn btn-primary" %}
   </form>
+  <!-- 탈퇴 버튼 -->
+  <a href={% url 'accounts:delete' %} class="btn btn-outline-secondary">회원탈퇴</a>
 {% endblock content %}

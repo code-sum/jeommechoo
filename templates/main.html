@@ -19,6 +19,7 @@
         <form action="{% url 'accounts:login' %}" method="post">
           {% csrf_token %}
           {% bootstrap_form forms %}
+          <a href="{% url 'accounts:signup' %}" class="btn btn-success">회원가입</a>
           <input type="submit" class="btn btn-primary" value="로그인">
         </form>
       </div>
