@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "restaurants",
     "reviews",
     "accounts",
     "django_bootstrap5",

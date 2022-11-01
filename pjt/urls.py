@@ -22,4 +22,5 @@ urlpatterns = [
     path("", views.main, name="main"),  # 메인화면
     path("accounts/", include("accounts.urls")),
     path("reviews/", include("reviews.urls")),
+    path("restaurants/", include("restaurants.urls")),
 ]
