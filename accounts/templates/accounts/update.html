@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+  <h1>프로필 업데이트</h1>
+  <a href={% url 'accounts:change_password' %} class="btn btn-primary">비밀번호 변경</a>
+  <form action="" method="POST">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    {% bootstrap_button button_type="submit" content="변경완료" button_class="btn btn-primary" %}
+  </form>
+{% endblock content %}

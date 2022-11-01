@@ -2,5 +2,12 @@
 {% load django_bootstrap5 %}
 
 {% block content %}
-  <h1>{{ user.username }}</h1>
+  <h1>아이디:{{ user.username }}</h1>
+  <p>닉네임:{{ user.last_name }}</p>
+  <!-- 본인 프로필일때만 '프로필수정' 버튼 보이게 -->
+  {% if request.user == user %}
+    <div>
+      <a href="{% url 'accounts:update' %}" class="btn btn-primary">수정하기</a>
+    </div>
+  {% endif %}
 {% endblock content %}
