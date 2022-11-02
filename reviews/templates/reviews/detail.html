@@ -12,10 +12,12 @@
     {{ review.grade }}</h3>
   <a href="{% url 'reviews:update' review.pk %}">수정</a>
   <a href="{% url 'reviews:delete' review.pk %}">삭제</a>
-  <h4 class="my-3">댓글</h4>
-  {% if request.user in comment.content.all %}
-    <span>{{ comment.content.count }}</span>
-  {% endif %}
+  <p>
+    <h4 class="my-3">댓글</h4>
+    {% if comments %}
+      <span>{{ comments|length }}개의 댓글이 있습니다.</span>
+    {% endif %}
+  </p>
   {% if request.user.is_authenticated %}
 
     <form action="{% url 'reviews:comment_create' review.pk %}" method="POST">
