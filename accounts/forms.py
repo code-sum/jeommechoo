@@ -12,6 +12,8 @@ class CustomUserCreationForm(UserCreationForm):
 class CustomUserChangeForm(UserChangeForm):
     class Meta:
         model = get_user_model()
-        fields = ('last_name',)
-        labels = {'last_name': '유저소개',
+        fields = ('last_name', 'profileimg',)
+        labels = {
+            'last_name': '유저소개',
+            'profileimg': '프로필 이미지',
         }
