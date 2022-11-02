@@ -6,8 +6,8 @@ from django import forms
 class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = get_user_model()
-        fields = ('username', 'password1', 'password2')
-        labels = {'username': '아이디', 'password1': '비밀번호', 'password2': '비밀번호 확인',
+        fields = ('username', 'password1', 'password2', 'profileimg')
+        labels = {'username': '아이디', 'password1': '비밀번호', 'password2': '비밀번호 확인','profileimg': '프로필 이미지',
         }
 
 class CustomUserChangeForm(UserChangeForm):
@@ -23,4 +23,3 @@ class CustomPasswordChangeForm(PasswordChangeForm):
         widget=forms.PasswordInput(attrs={'autocomplete': 'new-password'}),
         help_text=None
         )
-        

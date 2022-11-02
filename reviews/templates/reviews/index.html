@@ -1,6 +1,14 @@
 {% extends 'base.html' %}
-{% load django_bootstrap5 %}
 
 {% block content %}
-  열심히 할게요 ㅎㅎ
+  {% for review in reviews %}
+    <a href="{% url 'reviews:detail' review.pk %}">
+      {{ review.content }}
+    </a>
+    <h2>
+      {{ review.user }}</h2>
+  {% endfor %}
+  <a href="{% url 'reviews:create' %}">
+    리뷰작성
+  </a>
 {% endblock content %}
