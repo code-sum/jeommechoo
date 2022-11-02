@@ -4,7 +4,11 @@
 {% block content %}
   <!-- 프로필 이미지 -->
   <div>
-    <img src="{{ user.profileimg.url }}" alt="{{ user.profileimg }}" width="100" height="100">
+    {% if user.profileimg %}
+      <img src="{{ user.profileimg.url }}" alt="{{ user.profileimg }}" width="100" height="100">
+    {% else %}
+      <img src="https://archive.org/download/no-photo-available/no-photo-available.png" alt="none">
+    {% endif %}
   </div>
   <h1>유저 아이디:{{ user.username }}</h1>
   <p>유저 소개:{{ user.last_name }}</p>
