@@ -17,6 +17,7 @@ class CustomUserChangeForm(UserChangeForm):
         labels = {'last_name': '유저소개',
         }
 
+
 class CustomPasswordChangeForm(PasswordChangeForm):
     new_password1 = forms.CharField(
         label=("새 비밀번호"),

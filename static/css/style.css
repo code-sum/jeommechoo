@@ -11,6 +11,8 @@ body {
     width: 100vw;
     height: 100vh;
 }
+
+/* 배경 이미지 슬라이드 효과 css*/
 .wrap { 
     overflow: hidden;
     background-color: rgba(0, 0, 0, 0.654);
@@ -76,6 +78,10 @@ body {
     font-size: 15px;
 }
 
+.text-space {
+    letter-spacing: -.2rem;
+}
+
 
 .search-bar__input:focus {
     outline: none;
@@ -85,4 +91,12 @@ body {
 
 .bi-search {
     font-size: 15px;
+}
+
+
+/* 접시 이미지 사진 */
+
+.plate-img-size {
+    width: 40px;
+    height: 20px;
 }
