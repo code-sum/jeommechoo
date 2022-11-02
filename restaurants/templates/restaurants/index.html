@@ -3,7 +3,7 @@
   <h1>식당 메인화면!</h1>
   <!-- 관리자에게만 보이는 식당등록 버튼 -->
   {% if user.is_superuser %}
-    <a href="{% url 'restaurants:create' %}">식당등록</a>
+    <a href="{% url 'restaurants:create' %}" class="btn btn-primary">식당등록</a>
   {% endif %}
   <!-- 등록된 식당 목록 -->
   <div class="row">

@@ -14,7 +14,10 @@
     <div>
       {% if user.is_superuser %}
         <a href="{% url 'restaurants:update' restaurant.pk %}" class="btn btn-success">정보수정</a>
-        <a href="" class="btn btn-danger">식당삭제</a>
+        <form action="{% url 'restaurants:delete' restaurant.pk %}" method="POST">
+          {% csrf_token %}
+          <input type="submit" value="식당삭제" class="btn btn-danger">
+        </form>
       {% endif %}
     </div>
   </div>

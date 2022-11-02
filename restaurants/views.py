@@ -55,3 +55,15 @@ def update(request, pk):
             'form': form
         }
         return render(request, 'restaurants/update.html', context)
+
+@login_required
+def delete(request, pk):
+    if not request.user.is_superuser:
+        return HttpResponseForbidden()
+    else:
+        restaurant = get_object_or_404(Restaurant, pk=pk)
+        if request.method == 'POST':
+            restaurant.delete()
+            return redirect('restaurants:index')
+        else:
+            return HttpResponseForbidden()
