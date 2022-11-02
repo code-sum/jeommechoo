@@ -20,13 +20,13 @@ class Review(models.Model):
     content = models.TextField()
     grade = models.IntegerField(default=GradeSelect.five, choices=GradeSelect.choices)
     image = ProcessedImageField(
-        upload_to="images/",
+        upload_to="images/reviews_file/",
         processors=[ResizeToFill(100, 100)],
         format="JPEG",
         options={"quality": 80},
     )
     thumbnail = ProcessedImageField(
-        upload_to="images/",
+        upload_to="images/reviews_file/",
         processors=[ResizeToFill(100, 100)],
         format="JPEG",
         options={"quality": 60},
