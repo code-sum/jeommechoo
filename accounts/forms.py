@@ -1,5 +1,5 @@
 from dataclasses import fields
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm, PasswordChangeForm
 from django.contrib.auth import get_user_model
 
 class CustomUserCreationForm(UserCreationForm):
@@ -15,3 +15,12 @@ class CustomUserChangeForm(UserChangeForm):
         fields = ('last_name',)
         labels = {'last_name': '유저소개',
         }
+
+
+class CustomPasswordChangeForm(PasswordChangeForm):
+    class Meta:
+        model = get_user_model()
+        def init(self, args, **kwargs):
+            super(CustomPasswordChangeForm, self).init(args, **kwargs)
+            self.fields[password1].help_text = None
+       
