@@ -18,16 +18,25 @@
   <div class="background-size position-absolute d-flex align-items-center top-0">
     <!-- 로그인한 사용자에게 보이는 div -->
     {% if user.is_authenticated %}
-      <div>
-        <p>{{ request.user.username }}님 안녕하세요</p>
-        <a href="{% url 'accounts:logout' %}" class="btn btn-danger">
-          로그아웃
-        </a>
+      <div class="container d-flex flex-column align-items-center">
+        <h1 class="text-white mb-3">{{ request.user.username }}님 안녕하세요</h1>
+        <div class="d-flex flex-column justify-content-center align-items-center">
+          <a href="{% url 'accounts:logout' %}" class="mb-2 btn btn-primary rounded-5 py-2 px-3 text-white">
+            <div class="d-flex justify-content-center align-items-center">
+              <i class="bi bi-house-door-fill"></i>
+              <h5 class="fw-bold ms-2 mb-0">h o m e</h5>
+            </div>
+          </a>
+          <h5 class="text-black">OR</h5>
+          <a href="{% url 'accounts:logout' %}" class="btn btn-danger rounded-5 py-2 px-3">
+            <h5 class="fw-bold mb-0 text-white">l o g o u t ?</h5>
+          </a>
+        </div>
       </div>
       <!-- 로그아웃된 사용자에게 보이는 div -->
     {% else %}
       <div class="container-md">
-        <form action="{% url 'accounts:login' %}" method="post" class="text-black bg-white p-3 rounded-3 opacity-75">
+        <form action="{% url 'accounts:login' %}" method="POST" class="text-black bg-white p-3 rounded-3 opacity-75">
           {% csrf_token %}
           {% bootstrap_form forms %}
           <a href="{% url 'accounts:signup' %}" class="btn btn-success">회원가입</a>
@@ -36,6 +45,5 @@
       </div>
     {% endif %}
   </div>
-</div>
-{% block footer %}{% endblock footer %}
+  {% block footer %}{% endblock footer %}
 {% endblock content %}
