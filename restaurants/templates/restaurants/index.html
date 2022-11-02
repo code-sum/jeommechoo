@@ -5,4 +5,18 @@
   {% if user.is_superuser %}
     <a href="{% url 'restaurants:create' %}">식당등록</a>
   {% endif %}
-{% endblock content %}
+  <!-- 등록된 식당 목록 -->
+  {% for restaurant in restaurants %}
+    <div class="col-3" style="cursor: pointer;" onclick="location.href='{% url 'restaurants:detail' restaurant.pk %}'">
+      <div class="card">
+        {% if restaurant.image %}
+          <img src="{{ restaurant.thumbnail.url }}" class="card-img-top" alt="{{ restaurant.thumbnail }}">
+        {% else %}
+          <img src="https://archive.org/download/no-photo-available/no-photo-available.png" class="card-img-top" alt="none">
+        {% endif %}
+        <div class="card-body">
+          <h5 class="card-title">{{ restaurant.name }}</h5>
+        </div>
+      </div>
+    {% endfor %}
+  {% endblock content %}
