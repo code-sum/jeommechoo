@@ -23,13 +23,13 @@ class Restaurant(models.Model):
     address = models.CharField(max_length=50)
     phone = models.CharField(max_length=20, null=True)
     menupan = models.TextField()
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=1)
     category = models.IntegerField(default=CategorySelect.ten, choices=CategorySelect.choices)
-    image = ProcessedImageField(upload_to='images/', blank=True,
+    image = ProcessedImageField(upload_to='images/restaurant/', blank=True,
                                 processors=[ResizeToFill(700, 300)],
                                 format='JPEG',
                                 options={'quality': 80})
-    thumbnail = ProcessedImageField(upload_to='images/', blank=True,
+    thumbnail = ProcessedImageField(upload_to='images/restaurant/', blank=True,
                                 processors=[ResizeToFill(400, 300)],
                                 format='JPEG',
                                 options={'quality': 80})

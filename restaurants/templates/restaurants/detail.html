@@ -1,6 +1,24 @@
 {% extends 'base.html' %}
 {% block content %}
-  <div class="row d-flex text-center">
+  <div class="row d-flex text-center justify-content-center">
+    <!-- 식당 이미지 -->
+    <div class="col-4">
+      {% if restaurant.image %}
+        <img src="{{ restaurant.image.url }}" class="card-img-top" alt="{{ restaurant.image }}">
+      {% else %}
+        <img src="https://archive.org/download/no-photo-available/no-photo-available.png" class="card-img-top" alt="none">
+      {% endif %}
+    </div>
     <h1>{{ restaurant.name }}</h1>
+    <!-- 식당 정보수정 버튼, 식당 삭제 버튼(관리자한테만 보임) -->
+    <div>
+      {% if user.is_superuser %}
+        <a href="{% url 'restaurants:update' restaurant.pk %}" class="btn btn-success">정보수정</a>
+        <form action="{% url 'restaurants:delete' restaurant.pk %}" method="POST">
+          {% csrf_token %}
+          <input type="submit" value="식당삭제" class="btn btn-danger">
+        </form>
+      {% endif %}
+    </div>
   </div>
 {% endblock content %}
