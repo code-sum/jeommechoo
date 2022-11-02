@@ -1,6 +1,7 @@
 from dataclasses import fields
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm, PasswordChangeForm
 from django.contrib.auth import get_user_model
+from django import forms
 
 class CustomUserCreationForm(UserCreationForm):
     class Meta:
@@ -15,3 +16,11 @@ class CustomUserChangeForm(UserChangeForm):
         fields = ('last_name',)
         labels = {'last_name': '유저소개',
         }
+
+class CustomPasswordChangeForm(PasswordChangeForm):
+    new_password1 = forms.CharField(
+        label=("새 비밀번호"),
+        widget=forms.PasswordInput(attrs={'autocomplete': 'new-password'}),
+        help_text=None
+        )
+        
