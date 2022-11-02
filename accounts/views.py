@@ -6,13 +6,14 @@ from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.views.decorators.http import require_safe, require_POST
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
 
 def signup(request):
     if request.user.is_authenticated:
         return redirect('main')
     else:
         if request.method == 'POST':
-            form = CustomUserCreationForm(request.POST)
+            form = CustomUserCreationForm(request.POST, request.FILES)
             if form.is_valid():
                 user = form.save()
                 auth_login(request, user)
@@ -86,4 +87,26 @@ def change_password(request):
 def delete(request):
     request.user.delete()
     auth_logout(request)
+    return redirect('main')
+
+@require_POST
+def follow(request, pk):
+    if request.user.is_authenticated:
+        User = get_user_model()
+        me = request.user
+        you = User.objects.get(pk=pk)
+        if me != you:
+            if you.followers.filter(pk=me.pk).exists():
+                you.followers.remove(me)
+                is_followed = False
+            else:
+                you.followers.add(me)
+                is_followed = True
+            context = {
+                'is_followed': is_followed,
+                'followers_count': you.followers.count(),
+                'followings_count': you.followings.count(),
+            }
+            return JsonResponse(context)
+        return redirect('accounts:detail', you.username)
     return redirect('main')
