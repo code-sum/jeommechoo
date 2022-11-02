@@ -7,6 +7,7 @@ from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.views.decorators.http import require_safe, require_POST
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
+from django.contrib import messages
 
 def signup(request):
     if request.user.is_authenticated:
@@ -40,13 +41,11 @@ def login(request):
             if form.is_valid():
                 auth_login(request, form.get_user())
                 return redirect('main')
-        else:
-            form = AuthenticationForm()
-        context = {
-            'form': form
-        }
-        return render(request, 'accounts/login.html', context)
+            else:
+                messages.warning(request,'ID 또는 PASSWORD가 틀렸습니다.')
+                return redirect('main')
     else:
+        messages.warning(request,'ID 또는 PASSWORD가 틀렸습니다.')
         return redirect('main')
 
 @login_required

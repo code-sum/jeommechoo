@@ -40,7 +40,7 @@
           {% csrf_token %}
           {% bootstrap_form forms %}
           <a href="{% url 'accounts:signup' %}" class="btn btn-success">회원가입</a>
-          <input type="submit" class="btn btn-primary" value="로그인">
+          {% bootstrap_button button_class="btn btn-primary" button_type="submit" content="로그인" %}
         </form>
       </div>
     {% endif %}
