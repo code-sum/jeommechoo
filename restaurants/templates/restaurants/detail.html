@@ -35,13 +35,11 @@
       <a href="{% url 'reviews:create' restaurant.pk %}">리뷰작성</a>
     </button>
     {% for review in reviews %}
-
       <div class="card">
         <div class="card-body">
-          <p>{{review.content}}</p>
+          <p>{{ review.content }}</p>
         </div>
       </div>
-
     {% endfor %}
   </div>
 {% endblock content %}

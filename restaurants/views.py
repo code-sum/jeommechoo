@@ -17,8 +17,8 @@ def index(request):
 @require_safe
 def detail(request, pk):
     restaurant = get_object_or_404(Restaurant, pk=pk)
-    reviews = Review.objects.all(pk)
-    print(reviews)
+    reviews = restaurant.restaurant.all() # 역참조 용환님체고 현중님 따따봉 태호님 진짜멋져
+    print(restaurant)
     context = {
         'restaurant': restaurant,
         'reviews': reviews,
