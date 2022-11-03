@@ -4,6 +4,8 @@
 {% block css %}{% endblock %}
 {% block content %}
   <img src="{{ review.image.url }}" alt="{{ review.image }}">
+  <h1>식당이름:
+    {{ review.restaurant.name }}</h1>
   <h1>유저이름:
     {{ review.user }}</h1>
   <h3>리뷰내용:
