@@ -34,4 +34,7 @@ class Restaurant(models.Model):
                                 processors=[ResizeToFill(400, 300)],
                                 format='JPEG',
                                 options={'quality': 80})
+
+    def __str__(self):
+        return self.name
     

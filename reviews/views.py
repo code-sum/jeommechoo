@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from reviews.models import Review, Comment
 from .forms import ReviewForm, CommentForm
 from django.contrib.auth.decorators import login_required
+from restaurants.models import Restaurant
 # Create your views here.
 def index(request):
     reviews = Review.objects.order_by("-pk")
@@ -21,16 +22,19 @@ def detail(request, pk):
         "comment_form": comment_form,
     }
     return render(request, "reviews/detail.html", context)
+
 @login_required
-def create(request):
+def create(request, restaurant_pk):
+    restaurants = Restaurant.objects.get(pk=restaurant_pk)
     if request.method == "POST":
         # DB에 저장하는 로직
         review_form = ReviewForm(request.POST, request.FILES)
         if review_form.is_valid():
             review = review_form.save(commit=False)
             review.user = request.user
+            review.restaurant = restaurants
             review.save()
-            return redirect("reviews:index")
+            return redirect("restaurants:detail", restaurants.pk)
     else:
         review_form = ReviewForm()
     context = {

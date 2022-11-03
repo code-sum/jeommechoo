@@ -1,6 +1,7 @@
 @font-face {
     font-family: 'neo';
     src:url('../font/NanumSquareNeo-Variable.woff2') format('woff2');
+    weight: 400 700;
 } 
   
 * {
@@ -94,9 +95,17 @@ body {
 }
 
 
-/* 접시 이미지 사진 */
+/* accounts/detail.html */
 
-.plate-img-size {
-    width: 40px;
-    height: 20px;
+.profile-box-size {
+    margin-top: 10rem;
+}
+
+.profile-size {
+    width: 32rem;
+}
+
+
+.follow-font {
+    letter-spacing: -1px;
 }

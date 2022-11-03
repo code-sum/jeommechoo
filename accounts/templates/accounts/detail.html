@@ -3,110 +3,140 @@
 
 {% block content %}
   <!-- 프로필 이미지 -->
-
-  <div class="text-center container shadow-lg rounded-top background-size profile-box-size d-flex flex-column align-items-center">
-    <div class="py-5 my-5 d-md-flex justify-content-md-around align-items-md-center">
-      <div class="col px-3 text-center">
-        {% if user.profileimg %}
-          <img src="{{ user.profileimg.url }}" alt="{{ user.profileimg }}" width="200" height="200" class="rounded-circle">
-        {% else %}
-          <img src="https://archive.org/download/no-photo-available/no-photo-available.png" alt="none" class="rounded-circle">
-        {% endif %}
-      </div>
-      <div class="col p-3 text-start d-flex flex-column justify-content-around profile-size">
-        <div class="d-md-flex justify-content-center align-items-center">
-          <h1 class="mb-0 text-center text-space">{{ user.username }}</h1>
-          <!-- 본인 프로필일때만 '프로필수정' 버튼 보이게 -->
-          {% if request.user == user %}
-            <div class="text-center p-3">
-              <a href="{% url 'accounts:update' %}" class="btn btn-primary rounded-pill px-3">프로필수정</a>
-            </div>
+  <div class="background-size">
+    <div class="d-flex flex-column justify-content-center text-center container w-75 shadow-lg rounded-5 profile-box-size">
+      <div class="row py-3 d-md-flex justify-content-md-center align-items-md-center">
+        <div class="px-3 text-center profile-size">
+          {% if user.profileimg %}
+            <img src="{{ user.profileimg.url }}" alt="{{ user.profileimg }}" width="200" height="200" class="rounded-circle my-3">
+          {% else %}
+            <img src="https://archive.org/download/no-photo-available/no-photo-available.png" alt="none" width="300" height="200" class="rounded-circle my-3">
           {% endif %}
         </div>
-        <div class="d-flex align-items-center justify-content-center">
-          <p class="mb-0 text-center py-2 border border-2 border-dark w-75 rounded-pill">{{ user.last_name }}</p>
-        </div>
-        <!-- 팔로우 기능 -->
-        <!-- 팔로워/팔로잉 숫자 -->
-        <div class="d-flex p-3 justify-content-center">
-          <div class="px-2 text-center fw-bold follow-font">
-            <span class="">팔로우</span>
-            <br>
-            <span id="followers-count">{{ user.followers.count }}</span>
-          </div>
-          <div class="vr mx-3"></div>
-          <div class="px-2 text-center fw-bold follow-font">
-            <span class="">팔로잉</span>
-            <br>
-            <span id="followings-count">{{ user.followings.count }}</span>
-          </div>
-          <div class="vr mx-3"></div>
-          <div class="px-2 text-center fw-bold follow-font">
-            리뷰 개수
-            <br>
-            <span id="followings-count">{{ user.followings.count }}</span>
-          </div>
-        </div>
-        <!-- 팔로우/팔로우취소 버튼 -->
-        {% if request.user != user %}
-          <form id="follow-form" data-user-id="{{ user.pk }}">
-            {% csrf_token %}
-            {% if request.user in user.followers.all %}
-              <input type="submit" class="btn btn-outline-danger" value="팔로우 취소">
-            {% else %}
-              <input type="submit" class="btn btn-outline-primary" value="팔로우">
+        <div class="cold-flex flex-column profile-size">
+          <div class="mt-3 d-md-flex justify-content-center align-items-center">
+            <h1 class="mb-0 text-center text-space">{{ user.username }}</h1>
+            <!-- 본인 프로필일때만 '프로필수정' 버튼 보이게 -->
+            {% if request.user == user %}
+              <div class="text-center px-3 py-0 my-3">
+                <a href="{% url 'accounts:update' %}" class="btn btn-primary rounded-pill px-3">프로필수정</a>
+              </div>
             {% endif %}
-          </form>
-        {% endif %}
+            {% if request.user != user %}
+              <div class="m-3 text-center">
+                <form id="follow-form" data-user-id="{{ user.pk }}">
+                  {% csrf_token %}
+                  {% if request.user in user.followers.all %}
+                    <input type="submit" class="btn btn-danger" value="팔로우 취소">
+                  {% else %}
+                    <input type="submit" class="btn btn-primary" value="팔로우">
+                  {% endif %}
+                </form>
+              </div>
+            {% endif %}
+          </div>
+          <div class="d-flex align-items-center justify-content-center">
+            {% if user.last_name == '' %}
+              <p></p>
+            {% else %}
+              <p class="mb-0 text-center py-2 border border-2 border-dark w-75 rounded-pill">{{ user.last_name }}</p>
+            {% endif %}
+          </div>
+          <!-- 팔로우 기능 -->
+          <!-- 팔로워/팔로잉 숫자 -->
+          <div class="d-flex p-3 justify-content-center">
+            <div class="px-2 text-center fw-bold follow-font">
+              <span class="">팔로우</span>
+              <br>
+              <span id="followers-count">{{ user.followers.count }}</span>
+            </div>
+            <div class="vr mx-3"></div>
+            <div class="px-2 text-center fw-bold follow-font">
+              <span class="">팔로잉</span>
+              <br>
+              <span id="followings-count">{{ user.followings.count }}</span>
+            </div>
+            <div class="vr mx-3"></div>
+            <div class="px-2 text-center fw-bold follow-font">
+              리뷰 개수
+              <br>
+              <span id="followings-count">{{ user.followings.count }}</span>
+            </div>
+          </div>
+          <!-- 팔로우/팔로우취소 버튼 -->
+        </div>
       </div>
-    </hr>
+      <a class="text-decoration-none text-black" data-bs-toggle="collapse" href="#collapseProfile" role="button" aria-expanded="false" aria-controls="collapseProfile"><i class="bi bi-chevron-down text-danger opacity-25 fs-2"></i></i></a>
+    </div>
+    <div class="collapse" id="collapseProfile">
+      <div class="container w-75 shadow-lg rounded-5 background-size mt-4 profile-box-size">
+        <div class="container">
+          <div class="d-flex jusitify-content-around">
+            <p></p>
+            <p></p>
+          </div>
+          <hr>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
 {% endblock content %}
 
 {% block script %}
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script>
-  const form = document.querySelector('#follow-form')
-  const csrftoken = document
-    .querySelector('[name=csrfmiddlewaretoken]')
-    .value
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    const form = document.querySelector('#follow-form')
+    const csrftoken = document
+      .querySelector('[name=csrfmiddlewaretoken]')
+      .value
 
-    form
-    .addEventListener('submit', function (event) {
-      event.preventDefault()
-      const userId = event
-        .target
-        .dataset
-        .userId
+      form
+      .addEventListener('submit', function (event) {
+        event.preventDefault()
+        const userId = event
+          .target
+          .dataset
+          .userId
 
-        axios({
-          method: 'post',
-          url: `/accounts/${userId}/follow/`,
-          headers: {
-            'X-CSRFToken': csrftoken
-          }
+          axios({
+            method: 'post',
+            url: `/accounts/${userId}/follow/`,
+            headers: {
+              'X-CSRFToken': csrftoken
+            }
+          })
+          .then((response) => {
+            const isFollowed = response.data.is_followed
+            const followBtn = document.querySelector('#follow-form > input[type=submit]')
+            if (isFollowed === true) {
+              followBtn.value = '팔로우 취소'
+              followBtn
+                .classList
+                .add('btn-danger')
+              followBtn
+                .classList
+                .remove('btn-primary')
+            } else {
+              followBtn.value = '팔로우'
+              followBtn
+                .classList
+                .add('btn-primary')
+              followBtn
+                .classList
+                .remove('btn-danger')
+            }
+            const followersCountTag = document.querySelector('#followers-count')
+            const followingsCountTag = document.querySelector('#followings-count')
+            const followersCount = response.data.followers_count
+            const followingsCount = response.data.followings_count
+            followersCountTag.innerText = followersCount
+            followingsCountTag.innerText = followingsCount
+          })
+          .catch((error) => {
+            console.log(error.response)
+          })
         })
-        .then((response) => {
-          const isFollowed = response.data.is_followed
-          const followBtn = document.querySelector('#follow-form > input[type=submit]')
-          if (isFollowed === true) {
-            followBtn.value = '팔로우 취소'
-          } else {
-            followBtn.value = '팔로우'
-          }
-          const followersCountTag = document.querySelector('#followers-count')
-          const followingsCountTag = document.querySelector('#followings-count')
-          const followersCount = response.data.followers_count
-          const followingsCount = response.data.followings_count
-          followersCountTag.innerText = followersCount
-          followingsCountTag.innerText = followingsCount
-        })
-        .catch((error) => {
-          console.log(error.response)
-        })
-      })
-</script>
+  </script>
 {% endblock script %}
 {% block footer %}{% endblock footer %}
 </div>

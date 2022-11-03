@@ -7,10 +7,10 @@
     
     <div class="d-flex flex-column bg-white border border-2 border-opacity-75 border-start-0 border-end-0 rounded-4 border-secondary shadow-lg">
         <h1 class="text-center mt-5 mb-3 fw-bold text-space">프로필 업데이트</h1>
-        <form action="" method="POST" class="" style="padding: 70px;">
+        <form action="" method="POST" class="" style="padding: 70px;" enctype="multipart/form-data">
             {% csrf_token %}
             {% bootstrap_form form %}
-            <p style="font-size:8px;" class='text-end'>비밀번호 변경을 원하시면 -><span><a href="{% url 'accounts:change_password' %}" class="btn btn-primary my-3 btn-sm" style="width: 110px; margin-left:30px;">비밀번호 변경</a></span></p>
+            <p style="font-size:8px;" class='text-end'>비밀번호 변경을 원하시면 ><span><a href="{% url 'accounts:change_password' %}" class="btn btn-primary my-3 btn-sm" style="width: 110px; margin-left:30px;">비밀번호 변경</a></span></p>
             <div class="text-end">
                 {% bootstrap_button button_type="submit" content="완료" button_class="btn btn-primary" %}
             </div>
