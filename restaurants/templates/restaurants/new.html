@@ -4,7 +4,7 @@
 {% block content %}
 
   <h1>신규 식당등록</h1>
-  <form action="" method="POST">
+  <form action="" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     {% bootstrap_form form %}
     {% bootstrap_button content="등록완료" button_type="submit" button_class="btn-primary" %}
