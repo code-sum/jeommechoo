@@ -1,14 +1,42 @@
 {% extends 'base.html' %}
+{% load static %}
 {% load django_bootstrap5 %}
-
 {% block content %}
-  <h1>프로필 업데이트</h1>
-  <a href={% url 'accounts:change_password' %} class="btn btn-primary">비밀번호 변경</a>
-  <form action="" method="POST">
-    {% csrf_token %}
-    {% bootstrap_form form %}
-    {% bootstrap_button button_type="submit" content="변경완료" button_class="btn btn-primary" %}
-  </form>
-  <!-- 탈퇴 버튼 -->
-  <a href={% url 'accounts:delete' %} class="btn btn-outline-secondary">회원탈퇴</a>
+<div class="background-size d-flex flex-column align-items-center justify-content-center">
+    
+    
+    <div class="d-flex flex-column bg-white border border-2 border-opacity-75 border-start-0 border-end-0 rounded-4 border-secondary shadow-lg">
+        <h1 class="text-center mt-5 mb-3 fw-bold text-space">프로필 업데이트</h1>
+        <form action="" method="POST" class="" style="padding: 70px;">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            <p style="font-size:8px;" class='text-end'>비밀번호 변경을 원하시면 -><span><a href="{% url 'accounts:change_password' %}" class="btn btn-primary my-3 btn-sm" style="width: 110px; margin-left:30px;">비밀번호 변경</a></span></p>
+            <div class="text-end">
+                {% bootstrap_button button_type="submit" content="완료" button_class="btn btn-primary" %}
+            </div>
+        </form>
+    </div>
+        <!-- 탈퇴 버튼 -->
+        
+        <button type="button" class="btn mt-3 btn-outline-none btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal"  style="margin-left: 31rem; color:red;">
+            회원탈퇴
+        </button>
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">정말요?</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    정말로 탈퇴하시겠습니까?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                    <a href="{% url 'accounts:delete' %}" class="btn btn-danger">회원탈퇴</a>
+                </div>
+            </div>
+            </div>
+        </div>
+</div>
 {% endblock content %}
