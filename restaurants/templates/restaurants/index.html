@@ -9,15 +9,17 @@
   <div class="row">
     <div class="col-3">
       {% for restaurant in restaurants %}
-        <div style="cursor: pointer;" onclick="location.href='{% url 'restaurants:detail' restaurant.pk %}'">
+        <div>
           <div class="card">
             {% if restaurant.image %}
-              <img src="{{ restaurant.thumbnail.url }}" class="card-img-top" alt="{{ restaurant.thumbnail }}">
+              <a href="{% url 'restaurants:detail' restaurant.pk %}"><img src="{{ restaurant.thumbnail.url }}" class="card-img-top" alt="{{ restaurant.thumbnail }}"></a>
             {% else %}
-              <img src="https://archive.org/download/no-photo-available/no-photo-available.png" class="card-img-top" alt="none">
+              <a href="{% url 'restaurants:detail' restaurant.pk %}"><img src="https://archive.org/download/no-photo-available/no-photo-available.png" class="card-img-top" alt="none"></a>
             {% endif %}
             <div class="card-body">
-              <h5 class="card-title">{{ restaurant.name }}</h5>
+              <a class="text-decoration-none" href="{% url 'restaurants:detail' restaurant.pk %}">
+                <h5 class="card-title">{{ restaurant.name }}</h5>
+              </a>
             </div>
           </div>
         {% endfor %}

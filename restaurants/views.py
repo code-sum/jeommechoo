@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 def index(request):
     # 일단 가장 최근에 등록한 식당이 맨 앞에 오도록(추후 별점 반영해서 수정)
     restaurants = Restaurant.objects.order_by('-pk')
+    print(restaurants)
     context = {
         'restaurants': restaurants
     }
@@ -17,11 +18,10 @@ def index(request):
 @require_safe
 def detail(request, pk):
     restaurant = get_object_or_404(Restaurant, pk=pk)
-    reviews = restaurant.restaurant.all() # 역참조 용환님체고 현중님 따따봉 태호님 진짜멋져
-    print(restaurant)
+    review = Review.objects.filter(restaurant=restaurant) # 역참조 용환님체고 현중님 따따봉 태호님 진짜멋져
     context = {
         'restaurant': restaurant,
-        'reviews': reviews,
+        'reviews': review,
     }
     return render(request, 'restaurants/detail.html', context)
 
