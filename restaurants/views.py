@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_safe, require_POST
 from .models import Restaurant
+from reviews.models import Review
 from .forms import RestaurantForm
 from django.http import HttpResponseForbidden, JsonResponse
 from django.contrib.auth.decorators import login_required
@@ -16,8 +17,11 @@ def index(request):
 @require_safe
 def detail(request, pk):
     restaurant = get_object_or_404(Restaurant, pk=pk)
+    reviews = Review.objects.all(pk)
+    print(reviews)
     context = {
-        'restaurant': restaurant
+        'restaurant': restaurant,
+        'reviews': reviews,
     }
     return render(request, 'restaurants/detail.html', context)
 
