@@ -5,6 +5,7 @@ from reviews.models import Review
 from .forms import RestaurantForm
 from django.http import HttpResponseForbidden, JsonResponse
 from django.contrib.auth.decorators import login_required
+import requests 
 
 def index(request):
     # 일단 가장 최근에 등록한 식당이 맨 앞에 오도록(추후 별점 반영해서 수정)
@@ -17,9 +18,28 @@ def index(request):
 
 @require_safe
 def detail(request, pk):
+    # api 불러올거면 import requests 해줘야함 requests 하려면 pip install requests 해줘야합니당
     restaurant = get_object_or_404(Restaurant, pk=pk)
     review = Review.objects.filter(restaurant=restaurant) # 역참조 용환님체고 현중님 따따봉 태호님 진짜멋져
+
+    client_id = '';    # 본인이 할당받은 ID 입력
+    client_pw = '';    # 본인이 할당받은 Secret 입력
+
+    endpoint = "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode"
+    url = f"{endpoint}?query={restaurant.address}"
+
+    headers = {
+    "X-NCP-APIGW-API-KEY-ID": client_id, 
+    "X-NCP-APIGW-API-KEY": client_pw,
+    }
+
+    res = requests.get(url, headers=headers)
+    lat = str(res.json()['addresses'][0]['y'])
+    lng = str(res.json()['addresses'][0]['x'])
+    
     context = {
+        'lat' : lat,
+        'lng' : lng,
         'restaurant': restaurant,
         'reviews': review,
     }
