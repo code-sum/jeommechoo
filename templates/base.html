@@ -20,48 +20,31 @@
     <!--nav-->
     {% block nav %}
       <div class="d-flex justify-content-center position-relative align-items-center my-3">
-        <div class="search-bar">
-          <i class="bi bi-search"></i>
-          <input class="search-bar__input" type="search" placeholder="검색"/>
+        <div>
+          <form class="d-flex" method="POST" action="{% url 'search' %}">
+            {% csrf_token %}
+            <input class="form-control me-2" type="search" placeholder="식당이름 검색" name="searched" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">
+              <i class="bi bi-search"></i>
+            </button>
+          </form>
         </div>
       </div>
 
       <nav class="navbar navbar-expand-lg" style="background-color:#F7D7C8;">
 
         <div class="container-fluid">
-          <a class="navbar-brand" href="#">Navbar</a>
+          <a class="navbar-brand" href="{% url 'main' %}">메인화면</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="{% url 'main' %}">Main</a>
+                <a class="nav-link" href="{% url 'restaurants:index' %}">식당목록</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Dropdown
-                </a>
-                <ul class="dropdown-menu">
-                  <li>
-                    <a class="dropdown-item" href="#">Action</a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" href="#">Another action</a>
-                  </li>
-                  <li>
-                    <hr class="dropdown-divider">
-                  </li>
-                  <li>
-                    <a class="dropdown-item" href="#">Something else here</a>
-                  </li>
-                </ul>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link disabled">Disabled</a>
+                <a class="nav-link" href="#">랜덤메뉴</a>
               </li>
             </ul>
           </div>
@@ -69,15 +52,15 @@
       </div>
     </nav>
     {% if messages %}
-    {% for message in messages %}
-    <div class="mb-0 alert alert-{{ message.tags }}">
-    {{ message }}
-    </div>
-    {% endfor %}
+      {% for message in messages %}
+        <div class="mb-0 alert alert-{{ message.tags }}">
+          {{ message }}
+        </div>
+      {% endfor %}
     {% endif %}
     <!-- content -->
     {% block content %}{% endblock content %}
-    
+
     <!-- footer -->
     {% block footer %}
       <div id="css_footer">
