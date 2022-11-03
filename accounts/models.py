@@ -8,4 +8,4 @@ class User(AbstractUser):
     profileimg = ProcessedImageField(upload_to='images/profile/', blank=True,
                                 processors=[ResizeToFill(100, 100)],
                                 format='JPEG',
-                                options={'quality': 70})
+                                options={'quality': 80})
