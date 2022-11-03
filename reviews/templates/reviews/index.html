@@ -2,6 +2,8 @@
 
 {% block content %}
   {% for review in reviews %}
+    <h1>식당이름:
+      {{ review.restaurant.name }}</h1>
     <a href="{% url 'reviews:detail' review.pk %}">
       {{ review.content }}
     </a>
