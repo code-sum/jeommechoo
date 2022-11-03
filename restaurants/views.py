@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.views.decorators.http import require_safe
+from django.views.decorators.http import require_safe, require_POST
 from .models import Restaurant
 from .forms import RestaurantForm
-from django.http import HttpResponseForbidden
+from django.http import HttpResponseForbidden, JsonResponse
 from django.contrib.auth.decorators import login_required
 
 def index(request):
@@ -67,3 +67,20 @@ def delete(request, pk):
             return redirect('restaurants:index')
         else:
             return HttpResponseForbidden()
+
+@login_required
+def like(request, pk):
+    if request.user.is_authenticated:
+        restaurant = get_object_or_404(Restaurant, pk=pk)
+        if restaurant.like_users.filter(pk=request.user.pk).exists():
+            restaurant.like_users.remove(request.user)
+            is_liked = False
+        else:
+            restaurant.like_users.add(request.user)
+            is_liked = True
+        context = {
+            'is_liked': is_liked,
+            'likeCount': restaurant.like_users.count(),
+        }
+        return JsonResponse(context)
+    return redirect('accounts:login')

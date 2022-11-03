@@ -24,6 +24,7 @@ class Restaurant(models.Model):
     phone = models.CharField(max_length=20, null=True)
     menupan = models.TextField()
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=1)
+    like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_restaurants')
     category = models.IntegerField(default=CategorySelect.ten, choices=CategorySelect.choices)
     image = ProcessedImageField(upload_to='images/restaurant/', blank=True,
                                 processors=[ResizeToFill(700, 300)],
