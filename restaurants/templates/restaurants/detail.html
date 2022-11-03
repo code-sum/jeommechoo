@@ -10,6 +10,17 @@
       {% endif %}
     </div>
     <h1>{{ restaurant.name }}</h1>
+    <!-- 좋아요 버튼 / 좋아요 수 -->
+    <div class="ms-3 d-flex align-items-center">
+      {% if request.user.is_authenticated %}
+        {% if request.user in restaurant.like_users.all %}
+          <i id="like-btn" data-restaurant-id="{{ restaurant.pk }}" class="text-danger bi bi-heart-fill"></i>
+        {% else %}
+          <i id="like-btn" data-restaurant-id="{{ restaurant.pk }}" class="text-danger bi bi-heart"></i>
+        {% endif %}
+      {% endif %}
+      <div class="ms-2" id="like-count">{{ restaurant.like_users.count }}</div>
+    </div>
     <!-- 식당 정보수정 버튼, 식당 삭제 버튼(관리자한테만 보임) -->
     <div>
       {% if user.is_superuser %}
@@ -22,3 +33,36 @@
     </div>
   </div>
 {% endblock content %}
+
+{% block script %}
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    const likeBtn = document.querySelector('#like-btn')
+    likeBtn.addEventListener('click', function (event) {
+      console.log(event.target.dataset)
+      axios({method: 'get', url: `/restaurants/${event.target.dataset.restaurantId}/like/`}).then(response => {
+        if (response.data.is_liked === true) {
+          event
+            .target
+            .classList
+            .add('bi-heart-fill')
+          event
+            .target
+            .classList
+            .remove('bi-heart')
+        } else {
+          event
+            .target
+            .classList
+            .add('bi-heart')
+          event
+            .target
+            .classList
+            .remove('bi-heart-fill')
+        }
+        const likeCount = document.querySelector('#like-count')
+        likeCount.innerText = response.data.likeCount
+      })
+    })
+  </script>
+{% endblock script %}
