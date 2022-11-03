@@ -9,17 +9,18 @@
         <div class="col-6 d-flex justify-content-center">
             <div class="card text-center" style="width: 20rem;">
                 <img  src="{{ review.image.url }}" alt="{{ review.image }}" class="card-img-top">
-                <div class="card-body">
+                <div class="card-body text-start">
                     <h5 class="card-title">식당이름:
                         {{ review.restaurant.name }}</h5>
-                    <h6 class="mt-1 card-subtitle mb-2 text-muted">유저이름:
-                        {{ review.user }}</h6>
+                    <p class="mt-1 card-subtitle mb-2 text-muted">유저이름:
+                        {{ review.user }}</p>
                     <p class="card-text">리뷰내용:
                         {{ review.content }}.</p>
                     <i class="cart-footer">평점:
                         {{ review.get_grade_display }}</i>
                     {% if request.user.is_authenticated %}
-                    <a href="{% url 'reviews:update' review.pk %}" class="btn btn-btn-outline-info">수정</a><a href="{% url 'reviews:delete' review.pk %}" class="btn btn-btn-outline-info">삭제</a>
+                        <a href="{% url 'reviews:update' review.pk %}" class="btn btn-btn-outline-info">수정</a>
+                        <a href="{% url 'reviews:delete' review.pk %}" class="btn btn-btn-outline-info">삭제</a>
                     
                     {% endif %}
                 </div>
