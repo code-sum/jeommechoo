@@ -2,6 +2,7 @@ from dataclasses import fields
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, PasswordChangeForm
 from django.contrib.auth import get_user_model
 from django import forms
+from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
 class CustomUserCreationForm(UserCreationForm):
     class Meta:
@@ -11,11 +12,14 @@ class CustomUserCreationForm(UserCreationForm):
         }
 
 class CustomUserChangeForm(UserChangeForm):
+    password = ReadOnlyPasswordHashField(
+        label=(""),
+        help_text=''
+        )
     class Meta:
         model = get_user_model()
-        fields = ('last_name',)
-        labels = {'last_name': '유저소개',
-        }
+        fields = ('last_name','profileimg')
+        labels = {'last_name': '유저소개','profileimg':'프로필이미지변경'}
 
 
 class CustomPasswordChangeForm(PasswordChangeForm):
