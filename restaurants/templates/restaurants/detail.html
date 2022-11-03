@@ -37,7 +37,7 @@
     {% for review in reviews %}
       <div class="card">
         <div class="card-body">
-          <p>{{ review.content }}</p>
+          <a href="{% url 'reviews:detail' review.pk %}">{{ review.content }}</a>
         </div>
       </div>
     {% endfor %}
