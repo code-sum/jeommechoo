@@ -1,5 +1,43 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
+  <!-- naver map id 값 받아와서 띄울 div-->
+  <div id="map" style="width:100vw;height:400px;"></div>
+  <!-- '/maps.js?ncpClientId=' 이부분에 naver api id 값 넣어주기" -->
+  <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId="></script>
+  <script>
+    
+    // lat, lang 위도 경도를 받아옴 '|escapejs' js 밖 html에서 사용할 수 있는 친구 끌어올 수 있는 역할 인듯 
+    var lat = "{{lat|escapejs}}"
+    var lng = "{{lng|escapejs}}"
+
+    // 중심 위도 경도 (우리의 경우 한 식당만 보여주는 거라서 그 식당의 위도 경도 좌표를 중심좌표로 설정)
+    var mapOptions = {
+      center: new naver.maps.LatLng(lat, lng),
+      zoom: 15
+    };
+
+    var map = new naver.maps.Map('map', mapOptions);
+
+    var map = new naver.maps.Map('map', {
+      center: new naver.maps.LatLng(lat, lng),
+      zoom: 15
+    });
+    
+    // 마커 생성
+    var marker = new naver.maps.Marker({
+        position: new naver.maps.LatLng(lat, lng),
+        icon: {
+          url: '{% static 'images/marker.png' %}', //50, 68 크기의 원본 이미지
+          size: new naver.maps.Size(50, 60),
+          scaledSize: new naver.maps.Size(30, 40),
+          origin: new naver.maps.Point(0, 0),
+          anchor: new naver.maps.Point(12, 34)
+        },
+        map: map,
+        animation: naver.maps.Animation.BOUNCE
+      });
+  </script>   
   <div class="row d-flex text-center justify-content-center">
     <!-- 식당 이미지 -->
     <div class="col-4">
