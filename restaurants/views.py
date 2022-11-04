@@ -6,47 +6,107 @@ from .forms import RestaurantForm
 from django.http import HttpResponseForbidden, JsonResponse
 from django.contrib.auth.decorators import login_required
 import requests 
-from django.db.models import Avg
+from django.db.models import Avg, Count
 
 @require_safe
 def index(request):
     sort = request.GET.get('sort','')
     if sort == '1':
-        restaurants = Restaurant.objects.filter(category=1)
-        return render(request, 'restaurants/index.html', {'restaurants' : restaurants})
+        restaurants = Restaurant.objects.filter(category=1).annotate(reviews_count=Count('review')).annotate(avg_grade=Avg('review__grade')).order_by('-pk')
+        rankers = Restaurant.objects.annotate(avg_grade=Avg('review__grade')).order_by('-avg_grade')[:10]
+        context = {
+            'restaurants': restaurants,
+            'rankers': rankers
+        }
+        return render(request, 'restaurants/index.html', context)
     elif sort == '2':
-        restaurants = Restaurant.objects.filter(category=2)
-        return render(request, 'restaurants/index.html', {'restaurants' : restaurants})
+        restaurants = Restaurant.objects.filter(category=2).annotate(reviews_count=Count('review')).annotate(avg_grade=Avg('review__grade')).order_by('-pk')
+        rankers = Restaurant.objects.annotate(avg_grade=Avg('review__grade')).order_by('-avg_grade')[:10]
+        context = {
+            'restaurants': restaurants,
+            'rankers': rankers
+        }
+        return render(request, 'restaurants/index.html', context)
     elif sort == '3':
-        restaurants = Restaurant.objects.filter(category=3)
-        return render(request, 'restaurants/index.html', {'restaurants' : restaurants})
+        restaurants = Restaurant.objects.filter(category=3).annotate(reviews_count=Count('review')).annotate(avg_grade=Avg('review__grade')).order_by('-pk')
+        rankers = Restaurant.objects.annotate(avg_grade=Avg('review__grade')).order_by('-avg_grade')[:10]
+        context = {
+            'restaurants': restaurants,
+            'rankers': rankers
+        }
+        return render(request, 'restaurants/index.html', context)
     elif sort == '4':
-        restaurants = Restaurant.objects.filter(category=4)
-        return render(request, 'restaurants/index.html', {'restaurants' : restaurants})
+        restaurants = Restaurant.objects.filter(category=4).annotate(reviews_count=Count('review')).annotate(avg_grade=Avg('review__grade')).order_by('-pk')
+        rankers = Restaurant.objects.annotate(avg_grade=Avg('review__grade')).order_by('-avg_grade')[:10]
+        context = {
+            'restaurants': restaurants,
+            'rankers': rankers
+        }
+        return render(request, 'restaurants/index.html', context)
     elif sort == '5':
-        restaurants = Restaurant.objects.filter(category=5)
-        return render(request, 'restaurants/index.html', {'restaurants' : restaurants})
+        restaurants = Restaurant.objects.filter(category=5).annotate(reviews_count=Count('review')).annotate(avg_grade=Avg('review__grade')).order_by('-pk')
+        rankers = Restaurant.objects.annotate(avg_grade=Avg('review__grade')).order_by('-avg_grade')[:10]
+        context = {
+            'restaurants': restaurants,
+            'rankers': rankers
+        }
+        return render(request, 'restaurants/index.html', context)
     elif sort == '6':
-        restaurants = Restaurant.objects.filter(category=6)
-        return render(request, 'restaurants/index.html', {'restaurants' : restaurants})
+        restaurants = Restaurant.objects.filter(category=6).annotate(reviews_count=Count('review')).annotate(avg_grade=Avg('review__grade')).order_by('-pk')
+        rankers = Restaurant.objects.annotate(avg_grade=Avg('review__grade')).order_by('-avg_grade')[:10]
+        context = {
+            'restaurants': restaurants,
+            'rankers': rankers
+        }
+        return render(request, 'restaurants/index.html', context)
     elif sort == '7':
-        restaurants = Restaurant.objects.filter(category=7)
-        return render(request, 'restaurants/index.html', {'restaurants' : restaurants})
+        restaurants = Restaurant.objects.filter(category=7).annotate(reviews_count=Count('review')).annotate(avg_grade=Avg('review__grade')).order_by('-pk')
+        rankers = Restaurant.objects.annotate(avg_grade=Avg('review__grade')).order_by('-avg_grade')[:10]
+        context = {
+            'restaurants': restaurants,
+            'rankers': rankers
+        }
+        return render(request, 'restaurants/index.html', context)
     elif sort == '8':
-        restaurants = Restaurant.objects.filter(category=8)
-        return render(request, 'restaurants/index.html', {'restaurants' : restaurants})
+        restaurants = Restaurant.objects.filter(category=8).annotate(reviews_count=Count('review')).annotate(avg_grade=Avg('review__grade')).order_by('-pk')
+        rankers = Restaurant.objects.annotate(avg_grade=Avg('review__grade')).order_by('-avg_grade')[:10]
+        context = {
+            'restaurants': restaurants,
+            'rankers': rankers
+        }
+        return render(request, 'restaurants/index.html', context)
     elif sort == '9':
-        restaurants = Restaurant.objects.filter(category=9)
-        return render(request, 'restaurants/index.html', {'restaurants' : restaurants})
+        restaurants = Restaurant.objects.filter(category=9).annotate(reviews_count=Count('review')).annotate(avg_grade=Avg('review__grade')).order_by('-pk')
+        rankers = Restaurant.objects.annotate(avg_grade=Avg('review__grade')).order_by('-avg_grade')[:10]
+        context = {
+            'restaurants': restaurants,
+            'rankers': rankers
+        }
+        return render(request, 'restaurants/index.html', context)
     elif sort == '10':
-        restaurants = Restaurant.objects.filter(category=10)
-        return render(request, 'restaurants/index.html', {'restaurants' : restaurants})
+        restaurants = Restaurant.objects.filter(category=10).annotate(reviews_count=Count('review')).annotate(avg_grade=Avg('review__grade')).order_by('-pk')
+        rankers = Restaurant.objects.annotate(avg_grade=Avg('review__grade')).order_by('-avg_grade')[:10]
+        context = {
+            'restaurants': restaurants,
+            'rankers': rankers
+        }
+        return render(request, 'restaurants/index.html', context)
     elif sort == '11':
-        restaurants = Restaurant.objects.filter(category=11)
-        return render(request, 'restaurants/index.html', {'restaurants' : restaurants})
+        restaurants = Restaurant.objects.filter(category=11).annotate(reviews_count=Count('review')).annotate(avg_grade=Avg('review__grade')).order_by('-pk')
+        rankers = Restaurant.objects.annotate(avg_grade=Avg('review__grade')).order_by('-avg_grade')[:10]
+        context = {
+            'restaurants': restaurants,
+            'rankers': rankers
+        }
+        return render(request, 'restaurants/index.html', context)
     else:
-        restaurants = Restaurant.objects.order_by('-pk')
-        return render(request, 'restaurants/index.html', {'restaurants' : restaurants})
+        restaurants = Restaurant.objects.annotate(reviews_count=Count('review')).annotate(avg_grade=Avg('review__grade')).order_by('-pk')
+        rankers = Restaurant.objects.annotate(avg_grade=Avg('review__grade')).order_by('-avg_grade')[:10]
+        context = {
+            'restaurants': restaurants,
+            'rankers': rankers
+        }
+        return render(request, 'restaurants/index.html', context)
 
 @require_safe
 def detail(request, pk):

@@ -14,7 +14,7 @@ class GradeSelect(models.IntegerChoices):
 
 class Review(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user')
-    restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, related_name='restaurant')
+    restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, related_name='review')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     content = models.TextField()
