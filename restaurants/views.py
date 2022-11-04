@@ -22,8 +22,8 @@ def detail(request, pk):
     restaurant = get_object_or_404(Restaurant, pk=pk)
     review = Review.objects.filter(restaurant=restaurant) # 역참조 용환님체고 현중님 따따봉 태호님 진짜멋져
 
-    client_id = 'f825jjghhc'; # 본인이 할당받은 ID 입력
-    client_pw = 'FmtyG4avMHyYf6TeM9br04GYt6l6IBJSwURE5AME';    # 본인이 할당받은 Secret 입력
+    client_id = '';    # 본인이 할당받은 ID 입력
+    client_pw = '';    # 본인이 할당받은 Secret 입력
 
     endpoint = "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode"
     url = f"{endpoint}?query={restaurant.address}"
@@ -44,6 +44,7 @@ def detail(request, pk):
         'restaurant': restaurant,
         'reviews': review,
     }
+
     return render(request, 'restaurants/detail.html', context)
 
 @login_required

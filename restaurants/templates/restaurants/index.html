@@ -1,18 +1,19 @@
 {% extends 'base.html' %}
 {% block content %}
-  <h1>식당 메인화면!</h1>
   <!-- 관리자에게만 보이는 식당등록 버튼 -->
   {% if user.is_superuser %}
     <a href="{% url 'restaurants:create' %}" class="btn btn-primary">식당등록</a>
   {% endif %}
   <!-- 등록된 식당 목록 -->
-  <div class="row">
-    <div class="col-3">
+  <div class="background-size">
+    <div class="container row row-cols-1 row-cols-md-3">
       {% for restaurant in restaurants %}
-        <div>
-          <div class="card">
+        <div class="col g-4">
+          <div class="card h-100">
             {% if restaurant.image %}
-              <a href="{% url 'restaurants:detail' restaurant.pk %}"><img src="{{ restaurant.thumbnail.url }}" class="card-img-top" alt="{{ restaurant.thumbnail }}"></a>
+              <a href="{% url 'restaurants:detail' restaurant.pk %}"><img src="{{ restaurant.thumbnail.url }}" class="card-img-top position-relative" alt="{{ restaurant.thumbnail }}">
+                <div class="image-hover position-absolute"></div>
+              </a>
             {% else %}
               <a href="{% url 'restaurants:detail' restaurant.pk %}"><img src="https://archive.org/download/no-photo-available/no-photo-available.png" class="card-img-top" alt="none"></a>
             {% endif %}
@@ -22,7 +23,9 @@
               </a>
             </div>
           </div>
-        {% endfor %}
-      </div>
+        </div>
+      {% endfor %}
+
     </div>
-  {% endblock content %}
+  </div>
+{% endblock content %}

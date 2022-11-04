@@ -2,9 +2,10 @@
 {% load static %}
 {% block content %}
   <!-- naver map id 값 받아와서 띄울 div-->
-  <div id="map" style="width:100vw;height:400px;"></div>
+  <div id="map" style="width:100vw;height:400px;" class="position-absolute"></div>
   <!-- '/maps.js?ncpClientId=' 이부분에 naver api id 값 넣어주기" -->
-  <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=f825jjghhc"></script>
+  <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId="></script>
+
   <script>
     
     // lat, lang 위도 경도를 받아옴 '|escapejs' js 밖 html에서 사용할 수 있는 친구 끌어올 수 있는 역할 인듯 
@@ -37,41 +38,59 @@
         map: map,
         animation: naver.maps.Animation.BOUNCE
       });
-  </script>   
-  <div class="row d-flex text-center justify-content-center">
+  </script> 
+   <div class="restaurant-detail-size">
     <!-- 식당 이미지 -->
-    <div class="col-4">
-      {% if restaurant.image %}
-        <img src="{{ restaurant.image.url }}" class="card-img-top" alt="{{ restaurant.image }}">
+    <div class="d-none d-sm-block d-sm-flex justify-content-sm-center thumbnail-position">
+      {% if restaurant.thumbnail %}
+        <img src="{{ restaurant.thumbnail.url }}" class="thumbnail-image" style="border: 4px solid rgba(221, 177, 177, 0.396); border-radius: 1rem;" alt="{{ restaurant.thumbnail }}">
       {% else %}
-        <img src="https://archive.org/download/no-photo-available/no-photo-available.png" class="card-img-top" alt="none">
+        <img src="https://archive.org/download/no-photo-available/no-photo-available.png" class="dummy-image" style="border: 4px solid rgba(221, 177, 177, 0.396); border-radius: 1rem;" alt="none">
       {% endif %}
     </div>
-    <h1>{{ restaurant.name }}</h1>
-    <!-- 좋아요 버튼 / 좋아요 수 -->
-    <div class="ms-3 d-flex align-items-center">
-      {% if request.user.is_authenticated %}
-        {% if request.user in restaurant.like_users.all %}
-          <i id="like-btn" data-restaurant-id="{{ restaurant.pk }}" class="text-danger bi bi-heart-fill"></i>
-        {% else %}
-          <i id="like-btn" data-restaurant-id="{{ restaurant.pk }}" class="text-danger bi bi-heart"></i>
-        {% endif %}
-      {% endif %}
-      <div class="ms-2" id="like-count">{{ restaurant.like_users.count }}</div>
-    </div>
-    <!-- 식당 정보수정 버튼, 식당 삭제 버튼(관리자한테만 보임) -->
-    <div>
-      {% if user.is_superuser %}
-        <a href="{% url 'restaurants:update' restaurant.pk %}" class="btn btn-success">정보수정</a>
-        <form action="{% url 'restaurants:delete' restaurant.pk %}" method="POST">
-          {% csrf_token %}
-          <input type="submit" value="식당삭제" class="btn btn-danger">
-        </form>
+    <div class="d-block d-sm-none d-flex justify-content-center thumbnail-position">
+      {% if restaurant.thumbnail %}
+        <img src="{{ restaurant.thumbnail.url }}" class="thumbnail-image" style="border: 4px solid rgba(221, 177, 177, 0.396); border-radius: 1rem;" alt="{{ restaurant.thumbnail }}">
+      {% else %}
+        <img src="https://archive.org/download/no-photo-available/no-photo-available.png" class="dummy-image" style="border: 4px solid rgba(221, 177, 177, 0.396); border-radius: 1rem;" alt="none">
       {% endif %}
     </div>
-    <button>
-      <a href="{% url 'reviews:create' restaurant.pk %}">리뷰작성</a>
-    </button>
+    <div class="container card border border-0 card-size align-itmes-center text-center">
+      <div class="card-body">
+        <h1 class="pt-5 pb-2 follow-font fw-bolder">{{ restaurant.name }}</h1>
+        <!-- 좋아요 버튼 / 좋아요 수 -->
+        <div class="d-flex justify-content-end align-items-center">
+          {% if request.user.is_authenticated %}
+            {% if request.user in restaurant.like_users.all %}
+              <i id="like-btn" data-restaurant-id="{{ restaurant.pk }}" class="text-danger fs-4 bi bi-heart-fill"></i>
+            {% else %}
+              <i id="like-btn" data-restaurant-id="{{ restaurant.pk }}" class="text-danger fs-4 bi bi-heart"></i>
+            {% endif %}
+          {% endif %}
+          <p class="text-end ms-1 mb-1 fs-4" id="like-count">{{ restaurant.like_users.count }}</p>
+        </div>
+        <p class="follow-font fw-bolder">{{ restaurant.address }}</p>
+        <p class="follow-font fw-bolder">{{ restaurant.phone }}</p>
+        <div class="border border-3 border-top border-start-0 border-bottom border-end-0 p-3">
+          <h6 class="fw-bolder text-secondary">MENU</h6>
+          <pre class="text-start">{{ restaurant.menupan }}</pre>
+        </div>
+        <!-- 식당 정보수정 버튼, 식당 삭제 버튼(관리자한테만 보임) -->
+        <div class="d-flex flex-column">
+          <div class="d-flex">
+            {% if user.is_superuser %}
+              <a href="{% url 'restaurants:update' restaurant.pk %}" class="btn btn-success">정보수정</a>
+              <form action="{% url 'restaurants:delete' restaurant.pk %}" method="POST">
+                {% csrf_token %}
+                <input type="submit" value="식당삭제" class="btn btn-danger">
+              </form>
+            {% endif %}
+          </div>
+        <button class="btn btn-primary card-footer">
+          <a href="{% url 'reviews:create' restaurant.pk %}">리뷰작성</a>
+        </button>
+      </div>
+    </div>
     {% for review in reviews %}
       <div class="card">
         <div class="card-body">
@@ -79,7 +98,9 @@
         </div>
       </div>
     {% endfor %}
+    </div>
   </div>
+</div>
 {% endblock content %}
 
 {% block script %}
@@ -114,3 +135,5 @@
     })
   </script>
 {% endblock script %}
+
+{% block footer %}{% endblock footer %}

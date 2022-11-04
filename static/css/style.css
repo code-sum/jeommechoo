@@ -118,3 +118,33 @@ body {
 .follow-font {
     letter-spacing: -1px;
 }
+
+
+
+/* restaurants/thumbnail */
+#map {
+    z-index: -1;
+}
+
+.thumbnail-position {
+    margin-top: 18rem;
+    z-index: 1;
+}
+
+.dummy-image {
+    width: 400px;
+    height: 300px;
+    box-shadow: 1px 5px 20px rgba(93, 84, 84, 0.716);
+}
+
+.thumbnail-image {
+    box-shadow: 1px 5px 20px rgba(93, 84, 84, 0.716);
+}
+
+.card-size {
+    margin-top: 2rem;
+    margin-bottom: 3rem;
+    width: 25rem;
+    box-shadow: 2px 4px 20px rgba(134, 123, 123, 0.665);
+    border-radius: 2rem;
+}
