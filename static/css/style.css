@@ -8,6 +8,10 @@
     font-family: 'neo';
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     width: 100vw;
     height: 100vh;
@@ -105,9 +109,6 @@ body {
 
 .profile-box-size {
     background-color: rgba(255, 255, 255, 0.529);
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -90%);
 }
 
 .profile-size {
@@ -147,4 +148,35 @@ body {
     width: 25rem;
     box-shadow: 2px 4px 20px rgba(134, 123, 123, 0.665);
     border-radius: 2rem;
+}
+
+.restaurant-detail-size {
+    height: 100vh;
+}
+
+.like-box {
+    width: 100px;
+    box-shadow: 3px 4px 2px rgb(167, 167, 181);
+    border: 3px solid rgb(51, 28, 11);
+}
+
+.card-footer-background {
+    background-color: #f8f0ed;
+}
+
+.card-footer-background:hover {
+    background-color: #f8cbbdda;
+}
+
+.icon-vertical {
+    vertical-align: middle;
+}
+
+
+.margin-div {
+    margin-top: 100vh;
+}
+
+.collapseProfile {
+    border-radius: 3rem;
 }
