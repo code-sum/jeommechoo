@@ -11,6 +11,8 @@ from django.contrib import messages
 from restaurants.models import Restaurant
 from reviews.models import Review
 from restaurants.views import like
+import requests, json
+
 def signup(request):
     if request.user.is_authenticated:
         return redirect('main')
@@ -33,11 +35,38 @@ def detail(request, pk):
     user = get_object_or_404(get_user_model(), pk=pk)
     review = Review.objects.filter(user=user)
     like = Restaurant.objects.filter(like_users=user)
+    like_restaurant = Restaurant.objects.filter(like_users=user).values('address')
+    
+    like_restaurant = [restaurant for restaurant in like_restaurant]
+    client_id = '7apalzu8wx';    # 본인이 할당받은 ID 입력
+    client_pw = 'LpKKb9dnZwQUKjkeDuXDZ6n3NgeD1uN50pvk9MYj';    # 본인이 할당받은 Secret 입력
+
+    endpoint = "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode"
+   
+    for restaurant in like_restaurant:
+
+        url = f"{endpoint}?query={restaurant['address']}"
+
+        headers = {
+        "X-NCP-APIGW-API-KEY-ID": client_id, 
+        "X-NCP-APIGW-API-KEY": client_pw,
+        }
+
+        res = requests.get(url, headers=headers)
+
+        lat = str(res.json()['addresses'][0]['y'])
+        lng = str(res.json()['addresses'][0]['x'])
+
+        restaurant['address'] = [lat, lng]
+
+   
     context = {
         'user': user,
         'review':review,
-        'like':like
+        'like':like,
+        'like_restaurant': like_restaurant,
     }
+
     return render(request, 'accounts/detail.html', context)
 
 def login(request):
