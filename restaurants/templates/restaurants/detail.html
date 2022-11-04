@@ -7,39 +7,58 @@
   <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=7apalzu8wx"></script>
 
   <script>
-    
-    // lat, lang 위도 경도를 받아옴 '|escapejs' js 밖 html에서 사용할 수 있는 친구 끌어올 수 있는 역할 인듯 
+    // lat, lang 위도 경도를 받아옴 '|escapejs' js 밖 html에서 사용할 수 있는 친구 끌어올 수 있는 역할 인듯
     var lat = "{{lat|escapejs}}"
     var lng = "{{lng|escapejs}}"
 
     // 중심 위도 경도 (우리의 경우 한 식당만 보여주는 거라서 그 식당의 위도 경도 좌표를 중심좌표로 설정)
     var mapOptions = {
-      center: new naver.maps.LatLng(lat, lng),
+      center: new naver
+        .maps
+        .LatLng(lat, lng),
       zoom: 15
     };
 
-    var map = new naver.maps.Map('map', mapOptions);
+    var map = new naver
+      .maps
+      .Map('map', mapOptions);
 
-    var map = new naver.maps.Map('map', {
-      center: new naver.maps.LatLng(lat, lng),
-      zoom: 15
-    });
-    
+    var map = new naver
+      .maps
+      .Map('map', {
+        center: new naver
+          .maps
+          .LatLng(lat, lng),
+        zoom: 15
+      });
+
     // 마커 생성
-    var marker = new naver.maps.Marker({
-        position: new naver.maps.LatLng(lat, lng),
+    var marker = new naver
+      .maps
+      .Marker({
+        position: new naver
+          .maps
+          .LatLng(lat, lng),
         icon: {
-          url: '{% static 'images/marker.png' %}', //50, 68 크기의 원본 이미지
-          size: new naver.maps.Size(50, 60),
-          scaledSize: new naver.maps.Size(30, 40),
-          origin: new naver.maps.Point(0, 0),
-          anchor: new naver.maps.Point(12, 34)
+          url: '{% static ' images / marker.png ' %}', //50, 68 크기의 원본 이미지
+          size: new naver
+            .maps
+            .Size(50, 60),
+          scaledSize: new naver
+            .maps
+            .Size(30, 40),
+          origin: new naver
+            .maps
+            .Point(0, 0),
+          anchor: new naver
+            .maps
+            .Point(12, 34)
         },
         map: map,
         animation: naver.maps.Animation.BOUNCE
       });
-  </script> 
-   <div class="restaurant-detail-size">
+  </script>
+  <div class="restaurant-detail-size">
     <!-- 식당 이미지 -->
     <div class="d-none d-sm-block d-sm-flex justify-content-sm-center thumbnail-position">
       {% if restaurant.thumbnail %}
@@ -61,53 +80,27 @@
         <div class="py-3 d-flex flex-column">
           <div class="d-flex justify-content-end align-items-center icon-vertical">
             {% if user.is_superuser %}
-              <a href="{% url 'restaurants:update' restaurant.pk %}" class="m-0 text-secondary icon-vertical opacity-75"><i class="bi bi-pencil-square fs-4"></i></a>
+              <a href="{% url 'restaurants:update' restaurant.pk %}" class="m-0 text-secondary icon-vertical opacity-75">
+                <i class="bi bi-pencil-square fs-4"></i>
+              </a>
               <form action="{% url 'restaurants:delete' restaurant.pk %}" method="POST">
                 {% csrf_token %}
-                <button type="submit" class="btn btn-none text-danger opacity-75 py-0"><i class="fs-4 bi bi-x-lg icon-vertical"></i></button>
+                <button type="submit" class="btn btn-none text-danger opacity-75 py-0">
+                  <i class="fs-4 bi bi-x-lg icon-vertical"></i>
+                </button>
               </form>
             {% endif %}
           </div>
+        <<<<<<< HEAD </div> <!-- 좋아요 버튼 / 좋아요 수 --> <div class="pb-2 d-flex flex-column align-items-center"> <div class="like-box px-3 py-2 rounded-2"> {% if request.user.is_authenticated %} {% if request.user in restaurant.like_users.all %} <i id="like-btn" data-restaurant-id="{{ restaurant.pk }}" class="text-danger fs-5 bi bi-heart-fill"></i> {% else %} <i id="like-btn" data-restaurant-id="{{ restaurant.pk }}" class="text-danger fs-5 bi bi-heart"></i> {% endif %} <p class="text-center ms-1 mb-0 fs-6 fw-bolder" id="like-count">{{ restaurant.like_users.count }}</p> {% endif %} </div> </div> <h1 class="pt-3 pb-2 follow-font fw-bolder">{{ restaurant.name }}</h1> <p class="follow-font text-centerfw-normal mb-1">{{ restaurant.get_category_display }}</p> <p class="follow-font text-centerfw-normal mb-1"><i class="bi bi-shop fw-bold"></i>&nbsp;&nbsp;{{ restaurant.address }}</p> <p class="follow-font text-primary fw-semibold opacity-75"><i class="bi bi-telephone-forward-fill"></i>&nbsp;&nbsp;&nbsp;{{ restaurant.phone }}</p> <hr> <h6 class="fw-bolder text-secondary"><i class="icon-vertical bi bi-list fs-5"></i>MENU</h6> <pre class="text-start mt-3">{{ restaurant.menupan }}</pre> <hr> <form action="" method="post"> {% csrf_token %} <button type="submit" class="card-footer rounded-2 card-footer-background border-0 w-100"> </form> <a href="{% url 'reviews:create' restaurant.pk %}" class="text-decoration-none text-dark follow-font">리뷰작성</a> </button> </div> </div> {% for review in reviews %} <div class="card"> <div class="card-body"> <a href="{% url 'reviews:detail' review.pk %}">{{ review.content }}</a> ======= <button class="btn btn-primary card-footer"> <a href="{% url 'reviews:create' restaurant.pk %}">리뷰작성</a> </button> >>>>>>> restaurants
         </div>
-         <!-- 좋아요 버튼 / 좋아요 수 -->
-         <div class="pb-2 d-flex flex-column align-items-center">
-          <div class="like-box px-3 py-2 rounded-2">
-            {% if request.user.is_authenticated %}
-              {% if request.user in restaurant.like_users.all %}
-                <i id="like-btn" data-restaurant-id="{{ restaurant.pk }}" class="text-danger fs-5 bi bi-heart-fill"></i>
-              {% else %}
-                <i id="like-btn" data-restaurant-id="{{ restaurant.pk }}" class="text-danger fs-5 bi bi-heart"></i>
-              {% endif %}
-            <p class="text-center ms-1 mb-0 fs-6 fw-bolder" id="like-count">{{ restaurant.like_users.count }}</p>
-            {% endif %}
+      </div>
+      {% for review in reviews %}
+        <div class="card">
+          <div class="card-body">
+            <a href="{% url 'reviews:detail' review.pk %}">{{ review.content }}</a>
           </div>
         </div>
-        <h1 class="pt-3 pb-2 follow-font fw-bolder">{{ restaurant.name }}</h1>
-        <p class="follow-font text-centerfw-normal mb-1">{{ restaurant.get_category_display }}</p>
-        <p class="follow-font text-centerfw-normal mb-1"><i class="bi bi-shop fw-bold"></i>&nbsp;&nbsp;{{ restaurant.address }}</p>
-        <p class="follow-font text-primary fw-semibold opacity-75"><i class="bi bi-telephone-forward-fill"></i>&nbsp;&nbsp;&nbsp;{{ restaurant.phone }}</p>
-        <hr>
-
-        <h6 class="fw-bolder text-secondary"><i class="icon-vertical bi bi-list fs-5"></i>MENU</h6>
-        <pre class="text-start mt-3">{{ restaurant.menupan }}</pre>
-        <hr>
-        <form action="" method="post">
-          {% csrf_token %}
-          <button type="submit" class="card-footer rounded-2 card-footer-background border-0 w-100">
-
-        </form>
-  
-          <a href="{% url 'reviews:create' restaurant.pk %}" class="text-decoration-none text-dark follow-font">리뷰작성</a>
-        </button>
-      </div>
-    </div>
-    {% for review in reviews %}
-      <div class="card">
-        <div class="card-body">
-          <a href="{% url 'reviews:detail' review.pk %}">{{ review.content }}</a>
-        </div>
-      </div>
-    {% endfor %}
+      {% endfor %}
     </div>
   </div>
 {% endblock content %}

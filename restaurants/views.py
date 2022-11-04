@@ -7,14 +7,45 @@ from django.http import HttpResponseForbidden, JsonResponse
 from django.contrib.auth.decorators import login_required
 import requests 
 
+@require_safe
 def index(request):
-    # 일단 가장 최근에 등록한 식당이 맨 앞에 오도록(추후 별점 반영해서 수정)
-    restaurants = Restaurant.objects.order_by('-pk')
-    print(restaurants)
-    context = {
-        'restaurants': restaurants
-    }
-    return render(request, 'restaurants/index.html', context)
+    sort = request.GET.get('sort','')
+    if sort == '1':
+        restaurants = Restaurant.objects.filter(category=1)
+        return render(request, 'restaurants/index.html', {'restaurants' : restaurants})
+    elif sort == '2':
+        restaurants = Restaurant.objects.filter(category=2)
+        return render(request, 'restaurants/index.html', {'restaurants' : restaurants})
+    elif sort == '3':
+        restaurants = Restaurant.objects.filter(category=3)
+        return render(request, 'restaurants/index.html', {'restaurants' : restaurants})
+    elif sort == '4':
+        restaurants = Restaurant.objects.filter(category=4)
+        return render(request, 'restaurants/index.html', {'restaurants' : restaurants})
+    elif sort == '5':
+        restaurants = Restaurant.objects.filter(category=5)
+        return render(request, 'restaurants/index.html', {'restaurants' : restaurants})
+    elif sort == '6':
+        restaurants = Restaurant.objects.filter(category=6)
+        return render(request, 'restaurants/index.html', {'restaurants' : restaurants})
+    elif sort == '7':
+        restaurants = Restaurant.objects.filter(category=7)
+        return render(request, 'restaurants/index.html', {'restaurants' : restaurants})
+    elif sort == '8':
+        restaurants = Restaurant.objects.filter(category=8)
+        return render(request, 'restaurants/index.html', {'restaurants' : restaurants})
+    elif sort == '9':
+        restaurants = Restaurant.objects.filter(category=9)
+        return render(request, 'restaurants/index.html', {'restaurants' : restaurants})
+    elif sort == '10':
+        restaurants = Restaurant.objects.filter(category=10)
+        return render(request, 'restaurants/index.html', {'restaurants' : restaurants})
+    elif sort == '11':
+        restaurants = Restaurant.objects.filter(category=11)
+        return render(request, 'restaurants/index.html', {'restaurants' : restaurants})
+    else:
+        restaurants = Restaurant.objects.order_by('-pk')
+        return render(request, 'restaurants/index.html', {'restaurants' : restaurants})
 
 @require_safe
 def detail(request, pk):
@@ -22,8 +53,8 @@ def detail(request, pk):
     restaurant = get_object_or_404(Restaurant, pk=pk)
     review = Review.objects.filter(restaurant=restaurant) # 역참조 용환님체고 현중님 따따봉 태호님 진짜멋져
 
-    client_id = '7apalzu8wx';    # 본인이 할당받은 ID 입력
-    client_pw = 'LpKKb9dnZwQUKjkeDuXDZ6n3NgeD1uN50pvk9MYj';    # 본인이 할당받은 Secret 입력
+    client_id = '';    # 본인이 할당받은 ID 입력
+    client_pw = '';    # 본인이 할당받은 Secret 입력
 
     endpoint = "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode"
     url = f"{endpoint}?query={restaurant.address}"

@@ -2,6 +2,7 @@ from django.db import models
 from django.conf import settings
 from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFill
+from django.utils.translation import gettext_lazy as _
 
 class CategorySelect(models.IntegerChoices):
     one = 1, '한식'

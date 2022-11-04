@@ -1,9 +1,34 @@
 {% extends 'base.html' %}
 {% block content %}
-  <!-- 관리자에게만 보이는 식당등록 버튼 -->
-  {% if user.is_superuser %}
-    <a href="{% url 'restaurants:create' %}" class="btn btn-primary">식당등록</a>
-  {% endif %}
+
+  <!-- 카테고리 셀렉트박스/식당등록버튼 같은 div에 넣어서 양쪽 사이드배치 -->
+  <div class="d-flex justify-content-between align-items-center mt-3">
+    <!-- 셀렉트박스 -->
+    <div class="ms-3">
+      <select onchange="location = this.value;" class="form-select" id="floatingSelect" aria-label="Floating label select example">
+        <option>식당분류</option>
+        <option value="/restaurants/">최신등록순</option>
+        <option value="?sort=1">한식</option>
+        <option value="?sort=2">중식</option>
+        <option value="?sort=3">프렌치</option>
+        <option value="?sort=4">이탈리안</option>
+        <option value="?sort=5">스페니쉬</option>
+        <option value="?sort=6">아메리칸</option>
+        <option value="?sort=7">튀르키예</option>
+        <option value="?sort=8">디저트</option>
+        <option value="?sort=9">멕시칸</option>
+        <option value="?sort=10">최준홍님 pick!</option>
+        <option value="?sort=11">일식</option>
+      </select>
+    </div>
+    <!-- 관리자에게만 보이는 식당등록버튼 -->
+    {% if user.is_superuser %}
+      <div class="me-5">
+        <a href="{% url 'restaurants:create' %}" class="btn btn-primary">식당등록</a>
+      </div>
+    {% endif %}
+  </div>
+
   <!-- 등록된 식당 목록 -->
   <div class="background-size">
     <div class="container row row-cols-1 row-cols-md-3">
