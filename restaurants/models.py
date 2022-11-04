@@ -27,7 +27,7 @@ class Restaurant(models.Model):
     like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_restaurants')
     category = models.IntegerField(default=CategorySelect.ten, choices=CategorySelect.choices)
     image = ProcessedImageField(upload_to='images/restaurant/', blank=True,
-                                processors=[ResizeToFill(700, 300)],
+                                processors=[ResizeToFill(400, 300)],
                                 format='JPEG',
                                 options={'quality': 80})
     thumbnail = ProcessedImageField(upload_to='images/restaurant/', blank=True,
