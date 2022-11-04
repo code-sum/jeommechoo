@@ -6,6 +6,7 @@ from .forms import RestaurantForm
 from django.http import HttpResponseForbidden, JsonResponse
 from django.contrib.auth.decorators import login_required
 import requests 
+from django.db.models import Avg
 
 @require_safe
 def index(request):
@@ -52,9 +53,12 @@ def detail(request, pk):
     # api 불러올거면 import requests 해줘야함 requests 하려면 pip install requests 해줘야합니당
     restaurant = get_object_or_404(Restaurant, pk=pk)
     review = Review.objects.filter(restaurant=restaurant) # 역참조 용환님체고 현중님 따따봉 태호님 진짜멋져
+    # 리뷰 작성자들이 남긴 평점평균
+    avg_grade_query = review.aggregate(Avg('grade'))
+    avg_grade = avg_grade_query['grade__avg']
 
-    client_id = '';    # 본인이 할당받은 ID 입력
-    client_pw = '';    # 본인이 할당받은 Secret 입력
+    client_id = 'f825jjghhc';    # 본인이 할당받은 ID 입력
+    client_pw = 'FmtyG4avMHyYf6TeM9br04GYt6l6IBJSwURE5AME';    # 본인이 할당받은 Secret 입력
 
     endpoint = "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode"
     url = f"{endpoint}?query={restaurant.address}"
@@ -74,6 +78,7 @@ def detail(request, pk):
         'lng' : lng,
         'restaurant': restaurant,
         'reviews': review,
+        'avg_grade': avg_grade,
     }
 
     return render(request, 'restaurants/detail.html', context)
