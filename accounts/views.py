@@ -8,7 +8,9 @@ from django.views.decorators.http import require_safe, require_POST
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.contrib import messages
-
+from restaurants.models import Restaurant
+from reviews.models import Review
+from restaurants.views import like
 def signup(request):
     if request.user.is_authenticated:
         return redirect('main')
@@ -29,8 +31,12 @@ def signup(request):
 @require_safe
 def detail(request, pk):
     user = get_object_or_404(get_user_model(), pk=pk)
+    review = Review.objects.filter(user=user)
+    like = Restaurant.objects.filter(like_users=user)
     context = {
-        'user': user
+        'user': user,
+        'review':review,
+        'like':like
     }
     return render(request, 'accounts/detail.html', context)
 

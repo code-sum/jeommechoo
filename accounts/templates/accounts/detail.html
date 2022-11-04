@@ -75,14 +75,38 @@
           <div class="container mt-4">
             <div class="container">
               <div class="d-flex justify-content-around text-center container">
-                <div class="mx-2 fw-bolder text-secondary">내가 쓴 리뷰</div>
-                <div class="mx-2 fw-bolder text-secondary">내가 찜한 음식점</div>
+                <a style="text-decoration:none;" data-bs-toggle="collapse" href="#myreview" role="button" aria-expanded="false" aria-controls="myreview"><div class="mx-2 fw-bolder text-secondary"><i class="bi bi-grid-3x3-gap"></i> <span>내가 쓴 리뷰</span></div></a>
+                <a style="text-decoration:none;" type="button" data-bs-toggle="collapse" data-bs-target="#mylikelist" aria-expanded="false" aria-controls="mylikelist"><div class="mx-2 fw-bolder text-secondary"><i class="bi bi-heart-fill"></i> <span></span>내가 찜한 음식점</div>
+                </div></a>
+
+              <div class="row">
+                <div class="col-12">
+                  <div class="collapse" id="myreview">
+                    <div class="card card-body">
+                      {% for rev in review %}
+                      <img src="{{ review.thumbnail.url }}" alt="">
+                      <p>{{ rev.content }}</p>
+                      {% endfor %}
+                    </div>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="collapse" id="mylikelist">
+                    <div class="card card-body">
+                      {% for i in like %}
+                      <p>{{ i.category }}</p>
+                      {% endfor %}
+                    </div>
+                  </div>
+                </div>
               </div>
               <hr>
             </div>
           </div>
         </div>
+        <div>
 
+        </div>
       </div>
     </div>
   </div>
