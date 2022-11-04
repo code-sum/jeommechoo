@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% load django_bootstrap5 %}
 {% block content %}
 
@@ -66,58 +67,37 @@
         <a class="text-decoration-none text-black button-toggle" id="openCloseDiv">
           <i class="bi bi-chevron-down text-danger opacity-25 fs-2"></i>
         </a>
-
       </div>
     </div>
     <div class="mt-5" id="noneDiv" style="display: none;">
       <div class="container background-size shadow-lg collapseProfile">
         <div class="pt-5 d-flex justify-content-around text-center container">
-          <div class="mx-2 fw-bolder text-secondary">내가 쓴 리뷰</div>
-          <div class="mx-2 fw-bolder text-secondary">내가 찜한 음식점</div>
-        </div>
-        <hr>
-        
-        <div class="collapse" id="collapseProfile">
-          <div class="container mt-4">
-            <div class="container">
-              <div class="d-flex justify-content-around text-center container">
-                <a style="text-decoration:none;" data-bs-toggle="collapse" href="#myreview" role="button" aria-expanded="false" aria-controls="myreview"><div class="mx-2 fw-bolder text-secondary"><i class="bi bi-grid-3x3-gap"></i> <span>내가 쓴 리뷰</span></div></a>
-                <a style="text-decoration:none;" type="button" data-bs-toggle="collapse" data-bs-target="#mylikelist" aria-expanded="false" aria-controls="mylikelist"><div class="mx-2 fw-bolder text-secondary"><i class="bi bi-heart-fill"></i> <span></span>내가 찜한 음식점</div>
-                </div></a>
-
-              <div class="row">
-                <div class="col-12">
-                  <div class="collapse" id="myreview">
-                    <div class="card card-body">
-                      {% for rev in review %}
-                      <img src="{{ review.thumbnail.url }}" alt="">
-                      <p>{{ rev.content }}</p>
-                      {% endfor %}
-                    </div>
-                  </div>
-                </div>
-                <div class="col">
-                  <div class="collapse" id="mylikelist">
-                    <div class="card card-body">
-                      {% for i in like %}
-                      <p>{{ i.category }}</p>
-                      {% endfor %}
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <hr>
-            </div>
+          <div class="mx-2 fw-bolder text-secondary">
+            <a type="button" id="myReview" class="text-decoration-none text-black">내가 쓴 리뷰</a>
+          </div>
+          <div class="mx-2 fw-bolder text-secondary">
+            <a type="button" id="mylikeList" class="text-decoration-none text-black">내가 찜한 음식점</a>
           </div>
         </div>
-        <div>
-
+        <hr>
+        <div id="myReviewResult" class="container" style="display: none;">
+          {% for rev in review %}
+            <div class="text-center">
+              <img src="{{ rev.image.url }}" alt="">
+              <div cla="card-body">{{ rev.content }}</div>
+            </div>
+          {% endfor %}
         </div>
-
+        <div id="mylikeListResult" style="display: none;">
+          {% for i in like %}
+            <div class="card card-body">
+              <p>{{ i.get_category_display }}</p>
+            </div>
+          {% endfor %}
+        </div>
+        <hr>
       </div>
     </div>
-  </div>
-  
   {% endblock content %}
 
   {% block script %}
@@ -142,57 +122,81 @@
               headers: {
                 'X-CSRFToken': csrftoken
               }
-            })
+            });
             .then((response) => {
-              const isFollowed = response.data.is_followed
-              const followBtn = document.querySelector('#follow-form > input[type=submit]')
-              if (isFollowed === true) {
-                followBtn.value = '팔로우 취소'
-                followBtn
-                  .classList
-                  .add('btn-danger')
-                followBtn
-                  .classList
-                  .remove('btn-primary')
-              } else {
-                followBtn.value = '팔로우'
-                followBtn
-                  .classList
-                  .add('btn-primary')
-                followBtn
-                  .classList
-                  .remove('btn-danger')
-              }
-              const followersCountTag = document.querySelector('#followers-count')
-              const followingsCountTag = document.querySelector('#followings-count')
-              const followersCount = response.data.followers_count
-              const followingsCount = response.data.followings_count
-              followersCountTag.innerText = followersCount
-              followingsCountTag.innerText = followingsCount
-            })
+                const isFollowed = response.data.is_followed
+                const followBtn = document.querySelector('#follow-form > input[type=submit]')
+                if (isFollowed === true) {
+                  followBtn.value = '팔로우 취소'
+                  followBtn
+                    .classList
+                    .add('btn-danger')
+                  followBtn
+                    .classList
+                    .remove('btn-primary')
+                } else {
+                  followBtn.value = '팔로우'
+                  followBtn
+                    .classList
+                    .add('btn-primary')
+                  followBtn
+                    .classList
+                    .remove('btn-danger')
+                }
+                const followersCountTag = document.querySelector('#followers-count')
+                const followingsCountTag = document.querySelector('#followings-count')
+                const followersCount = response.data.followers_count
+                const followingsCount = response.data.followings_count
+                followersCountTag.innerText = followersCount
+                followingsCountTag.innerText = followingsCount
+              });
             .catch((error) => {
               console.log(error.response)
-            })
-          })
+            });
+        });
+    </script>
+    <script>
+      $('#openCloseDiv').click(function () {
 
-     
-        $('#openCloseDiv').click(function() {
+        if ($('#noneDiv').css("display") == "none") {
 
-          if ($('#noneDiv').css("display") == "none") {
-            
-            $(".button-toggle").click(function (event) {
-                x = $(this).attr("href");
-                $("html, body").stop().animate({scrollTop: $(x).offset().top = 10}, 1000, "easeInOutExpo");
+          $(".button-toggle").click(function (event) {
+            x = $(this).attr("href");
+            $("html, body")
+              .stop()
+              .animate({
+                scrollTop: $(x)
+                  .offset()
+                  .top = 10
+              }, 1000, "easeInOutExpo");
           });
-   
+
           $('#noneDiv').show();
 
-          }
-          else {
-            $('#noneDiv').hide();
-          }
-        });
+        } else {
+          $('#noneDiv').hide();
+        }
+      });
+    </script>
 
+    <script>
+      $('#myReview').click(function () {
+        if (($('#myReviewResult').css("display") === "none") && ($('#mylikeListResult').css("display") !== "none")) {
+          $('#mylikeListResult').hide();
+          $('#myReviewResult').show();
+        } else {
+          $('#myReviewResult').show();
+        }
+      });
+
+      $('#mylikeList').click(function () {
+        if (($('#mylikeListResult').css("display") == "none") && ($('#mylikelistResult').css("display") != "none")) {
+          $('#myReviewResult').hide();
+          $('#mylikeListResult').show();
+        } else {
+          $('#mylikeListResult').show();
+        }
+      });
     </script>
   {% endblock script %}
   {% block footer %}{% endblock footer %}

@@ -118,23 +118,16 @@
           <i class="icon-vertical bi bi-list fs-5"></i>MENU</h6>
         <pre class="text-start mt-3">{{ restaurant.menupan }}</pre>
         <hr>
-        <form action="" method="post">
-          {% csrf_token %}
-          <button type="submit" class="card-footer rounded-2 card-footer-background border-0 w-100"></form>
-          <a href="{% url 'reviews:create' restaurant.pk %}" class="text-decoration-none text-dark follow-font">리뷰작성</a>
-        </button>
+        <a href="{% url 'reviews:create' restaurant.pk %}" class="text-decoration-none text-dark follow-font">리뷰작성</a>
       </div>
     </div>
     {% for review in reviews %}
-      <div class="card">
-        <div class="card-body">
-          <a href="{% url 'reviews:detail' review.pk %}">{{ review.content }}</a>
-          <button class="btn btn-primary card-footer">
-            <a href="{% url 'reviews:create' restaurant.pk %}">리뷰작성</a>
-          </button>
+        <div class="card">
+          <div class="card-body">
+            <a href="{% url 'reviews:detail' review.pk %}">{{ review.content }}</a>
+          </div>
         </div>
-      </div>
-    {% endfor %}
+      {% endfor %}
   </div>
 </div>
 {% endblock content %}

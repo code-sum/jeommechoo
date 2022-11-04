@@ -57,8 +57,8 @@ def detail(request, pk):
     avg_grade_query = review.aggregate(Avg('grade'))
     avg_grade = avg_grade_query['grade__avg']
 
-    client_id = 'f825jjghhc';    # 본인이 할당받은 ID 입력
-    client_pw = 'FmtyG4avMHyYf6TeM9br04GYt6l6IBJSwURE5AME';    # 본인이 할당받은 Secret 입력
+    client_id = '';    # 본인이 할당받은 ID 입력
+    client_pw = '';    # 본인이 할당받은 Secret 입력
 
     endpoint = "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode"
     url = f"{endpoint}?query={restaurant.address}"
