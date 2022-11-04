@@ -4,42 +4,61 @@
   <!-- naver map id 값 받아와서 띄울 div-->
   <div id="map" style="width:100vw;height:400px;" class="position-absolute"></div>
   <!-- '/maps.js?ncpClientId=' 이부분에 naver api id 값 넣어주기" -->
-  <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId="></script>
+  <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=f825jjghhc"></script>
 
   <script>
-    
-    // lat, lang 위도 경도를 받아옴 '|escapejs' js 밖 html에서 사용할 수 있는 친구 끌어올 수 있는 역할 인듯 
+    // lat, lang 위도 경도를 받아옴 '|escapejs' js 밖 html에서 사용할 수 있는 친구 끌어올 수 있는 역할 인듯
     var lat = "{{lat|escapejs}}"
     var lng = "{{lng|escapejs}}"
 
     // 중심 위도 경도 (우리의 경우 한 식당만 보여주는 거라서 그 식당의 위도 경도 좌표를 중심좌표로 설정)
     var mapOptions = {
-      center: new naver.maps.LatLng(lat, lng),
+      center: new naver
+        .maps
+        .LatLng(lat, lng),
       zoom: 15
     };
 
-    var map = new naver.maps.Map('map', mapOptions);
+    var map = new naver
+      .maps
+      .Map('map', mapOptions);
 
-    var map = new naver.maps.Map('map', {
-      center: new naver.maps.LatLng(lat, lng),
-      zoom: 15
-    });
-    
+    var map = new naver
+      .maps
+      .Map('map', {
+        center: new naver
+          .maps
+          .LatLng(lat, lng),
+        zoom: 15
+      });
+
     // 마커 생성
-    var marker = new naver.maps.Marker({
-        position: new naver.maps.LatLng(lat, lng),
+    var marker = new naver
+      .maps
+      .Marker({
+        position: new naver
+          .maps
+          .LatLng(lat, lng),
         icon: {
-          url: '{% static 'images/marker.png' %}', //50, 68 크기의 원본 이미지
-          size: new naver.maps.Size(50, 60),
-          scaledSize: new naver.maps.Size(30, 40),
-          origin: new naver.maps.Point(0, 0),
-          anchor: new naver.maps.Point(12, 34)
+          url: '{% static ' images / marker.png ' %}', //50, 68 크기의 원본 이미지
+          size: new naver
+            .maps
+            .Size(50, 60),
+          scaledSize: new naver
+            .maps
+            .Size(30, 40),
+          origin: new naver
+            .maps
+            .Point(0, 0),
+          anchor: new naver
+            .maps
+            .Point(12, 34)
         },
         map: map,
         animation: naver.maps.Animation.BOUNCE
       });
-  </script> 
-   <div class="restaurant-detail-size">
+  </script>
+  <div class="restaurant-detail-size">
     <!-- 식당 이미지 -->
     <div class="d-none d-sm-block d-sm-flex justify-content-sm-center thumbnail-position">
       {% if restaurant.thumbnail %}
@@ -86,54 +105,54 @@
               </form>
             {% endif %}
           </div>
-        <button class="btn btn-primary card-footer">
-          <a href="{% url 'reviews:create' restaurant.pk %}">리뷰작성</a>
-        </button>
-      </div>
-    </div>
-    {% for review in reviews %}
-      <div class="card">
-        <div class="card-body">
-          <a href="{% url 'reviews:detail' review.pk %}">{{ review.content }}</a>
+          <button class="btn btn-primary card-footer">
+            <a href="{% url 'reviews:create' restaurant.pk %}">리뷰작성</a>
+          </button>
         </div>
       </div>
-    {% endfor %}
+      {% for review in reviews %}
+        <div class="card">
+          <div class="card-body">
+            <a href="{% url 'reviews:detail' review.pk %}">{{ review.content }}</a>
+          </div>
+        </div>
+      {% endfor %}
     </div>
   </div>
 </div>
 {% endblock content %}
 
 {% block script %}
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <script>
-    const likeBtn = document.querySelector('#like-btn')
-    likeBtn.addEventListener('click', function (event) {
-      console.log(event.target.dataset)
-      axios({method: 'get', url: `/restaurants/${event.target.dataset.restaurantId}/like/`}).then(response => {
-        if (response.data.is_liked === true) {
-          event
-            .target
-            .classList
-            .add('bi-heart-fill')
-          event
-            .target
-            .classList
-            .remove('bi-heart')
-        } else {
-          event
-            .target
-            .classList
-            .add('bi-heart')
-          event
-            .target
-            .classList
-            .remove('bi-heart-fill')
-        }
-        const likeCount = document.querySelector('#like-count')
-        likeCount.innerText = response.data.likeCount
-      })
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+  const likeBtn = document.querySelector('#like-btn')
+  likeBtn.addEventListener('click', function (event) {
+    console.log(event.target.dataset)
+    axios({method: 'get', url: `/restaurants/${event.target.dataset.restaurantId}/like/`}).then(response => {
+      if (response.data.is_liked === true) {
+        event
+          .target
+          .classList
+          .add('bi-heart-fill')
+        event
+          .target
+          .classList
+          .remove('bi-heart')
+      } else {
+        event
+          .target
+          .classList
+          .add('bi-heart')
+        event
+          .target
+          .classList
+          .remove('bi-heart-fill')
+      }
+      const likeCount = document.querySelector('#like-count')
+      likeCount.innerText = response.data.likeCount
     })
-  </script>
+  })
+</script>
 {% endblock script %}
 
 {% block footer %}{% endblock footer %}
