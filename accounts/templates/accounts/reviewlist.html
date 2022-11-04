@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load django_bootstrap5 %}
+{% block nav %}{% endblock nav %}
+{% block content %}
+  <div>
+    <div>
+      <h1>리뷰 사진들</h1>
+    </div>
+    <div>
+      {% for review in reviews %}
+
+        <p>{{ review.pk }}</p>
+
+        <img src="{{ review.image.url }}" alt="{{ review.image }}" width="50" height="50" class="rounded-circle my-3">
+
+      {% endfor %}
+    </div>
+  </div>
+  {% block footer %}{% endblock footer %}
+{% endblock content %}
