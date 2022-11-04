@@ -42,15 +42,33 @@
             {% else %}
               <a href="{% url 'restaurants:detail' restaurant.pk %}"><img src="https://archive.org/download/no-photo-available/no-photo-available.png" class="card-img-top" alt="none"></a>
             {% endif %}
-            <div class="card-body">
-              <a class="text-decoration-none" href="{% url 'restaurants:detail' restaurant.pk %}">
-                <h5 class="card-title">{{ restaurant.name }}</h5>
-              </a>
+            <div class="card-body d-flex flex-row justify-content-between">
+              <div class="d-flex flex-column">
+                <div>
+                  <a class="text-decoration-none" href="{% url 'restaurants:detail' restaurant.pk %}">
+                    <h5 class="card-title text-bold">{{ restaurant.name }}</h5>
+                  </a>
+                </div>
+                <div>
+                  <p>{{ restaurant.address }}</p>
+                </div>
+              </div>
+              <div>
+                <h3>5.0</h3>
+              </div>
             </div>
           </div>
         </div>
       {% endfor %}
-
     </div>
   </div>
+
+  <!-- 평점 높은 식당 목록 -->
+  <aside>
+    <div>
+      <b>인기순위</b>
+      <p></p>
+    </div>
+  </aside>
+
 {% endblock content %}
