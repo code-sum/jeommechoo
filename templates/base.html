@@ -48,6 +48,15 @@
                 <a class="nav-link" href="#">랜덤메뉴</a>
               </li>
             </ul>
+            {% if request.user.is_authenticated %}
+              {% if user.profileimg.url == "" %}
+                <img src="https://archive.org/download/no-photo-available/no-photo-available.png">
+                <span>{{ user }}</span>
+              {% else %}
+                <img src="{{ user.profileimg.url }}" style="border-radius: 10rem; width: 3rem; height: 3rem;">
+                <span>&nbsp;&nbsp;{{ user }}</span>
+              {% endif %}
+            {% endif %}
           </div>
         {% endblock nav %}
       </div>
