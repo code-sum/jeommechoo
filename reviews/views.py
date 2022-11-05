@@ -3,7 +3,15 @@ from reviews.models import Review, Comment
 from .forms import ReviewForm, CommentForm
 from django.contrib.auth.decorators import login_required
 from restaurants.models import Restaurant
+from django.views.generic.list import ListView
 # Create your views here.
+class ReviewsView(ListView):
+    model =Review
+    paginate_by = 3
+    context_object_name = 'reviews'
+    template_name = 'reviews/index.html'
+    ordering = ['created_at']
+    
 def index(request):
     reviews = Review.objects.order_by("-pk")
     context = {
