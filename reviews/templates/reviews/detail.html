@@ -13,7 +13,8 @@
             <h5 class="card-title">식당이름:
               {{ review.restaurant.name }}</h5>
             <p class="mt-1 card-subtitle mb-2 text-muted">유저이름:
-              {{ review.user }}</p>
+              <a href="{% url 'accounts:detail' review.user.pk %}" class="text-decoration-none">{{ review.user.username }}</a>
+            </p>
             <p class="card-text">리뷰내용:
               {{ review.content }}</p>
             <i class="cart-footer">평점:
