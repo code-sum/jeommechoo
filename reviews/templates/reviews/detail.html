@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 {% load django_bootstrap5 %}
 {% bootstrap_css %}
-{% block css %}{% endblock %}
+{% bootstrap_javascript %}
+{% block css %}{% endblock css %}
 {% block content %}
 
   <div class="container mt-3 border border-opacity-10 border-2 rounded-3">
@@ -40,14 +41,16 @@
 
         <!-- 로그인한 유저만 댓글 생성 -->
         {% if request.user.is_authenticated %}
-          <form action="{% url 'reviews:comment_create' review.pk %}" method="POST">
+          <form id="comment-form" data-review-id="{{ review.pk }}">
             {% csrf_token %}
             {% bootstrap_form comment_form layout='inline'%}
             {% bootstrap_button button_type="submit" content="작성" button_class="btn-outline-info btn-sm" %}
           </form>
-          <hr>
+        {% endif %}
+        <hr>
 
-          <!-- 댓글 불러오기 -->
+        <!-- 댓글 불러오기 -->
+        <div id="comments">
           {% for comment in comments %}
             <a class="text-text-decoration-none" href="{% url 'accounts:detail' comment.user.pk %}">
               <p style="font-size:7px;">
@@ -70,11 +73,42 @@
             {% empty %}
             <p>댓글이 없어요 ㅠ_ㅠ</p>
           {% endfor %}
+        </div>
 
-        {% endif %}
       </div>
     </div>
   </div>
 
 {% endblock content %}
-{% bootstrap_javascript %}
+
+{% block script %}
+  <!-- 댓글 비동기 -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    const commentForm = document.querySelector('#comment-form')
+    const csrftoken = document
+      .querySelector('[name=csrfmiddlewaretoken]')
+      .value
+      commentForm
+      .addEventListener('submit', function (event) {
+        event.preventDefault();
+        axios({
+          method: 'post',
+          url: `/reviews/${event.target.dataset.reviewId}/comments/`,
+          headers: {
+            'X-CSRFToken': csrftoken
+          },
+          data: new FormData(commentForm)
+        }).then(response => {
+          console.log(response.data)
+          const comments = document.querySelector('#comments')
+          const p = document.createElement('p')
+          p.innerText = `${response.data.userName} | ${response.data.content}`
+          const hr = document.createElement('hr')
+          comments.append(p, hr)
+          commentForm.reset()
+        })
+      })
+  </script>
+
+{% endblock script %}

@@ -4,8 +4,9 @@ from .forms import ReviewForm, CommentForm
 from django.contrib.auth.decorators import login_required
 from restaurants.models import Restaurant
 from django.views.generic.list import ListView
-from django.http import HttpResponseForbidden
+from django.http import HttpResponseForbidden, JsonResponse
 from django.views.decorators.http import require_POST
+from django.contrib import messages
 
 class ReviewsView(ListView):
     model =Review
@@ -94,7 +95,14 @@ def comment_create(request, pk):
         comment.review = review
         comment.user = request.user
         comment.save()
-    return redirect("reviews:detail", review.pk)
+        context = {
+            'content': comment.content,
+            'userName': comment.user.username
+        }
+        return JsonResponse(context)
+    else:
+        messages.warning(request, "유효하지 않은 댓글 양식입니다.")
+        return redirect("reviews:detail", review.pk)
 
 @login_required
 def comment_delete(request, pk, comment_pk):
