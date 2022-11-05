@@ -11,23 +11,32 @@
         <div class="card text-center" style="width: 20rem;">
           <img src="{{ review.image.url }}" alt="{{ review.image }}" class="card-img-top">
           <div class="card-body text-start">
-            <h5 class="card-title">식당이름:
+            <h5 class="card-title">
               {{ review.restaurant.name }}</h5>
-            <p class="mt-1 card-subtitle mb-2 text-muted">유저이름:
+            <p class="mt-1 card-subtitle mb-2 text-muted">글쓴이 :
               <a href="{% url 'accounts:detail' review.user.pk %}" class="text-decoration-none">{{ review.user.username }}</a>
             </p>
-            <p class="card-text">리뷰내용:
+            <p class="card-text">리뷰 :
               {{ review.content }}</p>
-            <i class="cart-footer">평점:
+            <i class="cart-footer">평점 :
               {{ review.get_grade_display }}</i>
+            <div class="d-flex justify-content-end">
+              {% if review.created_string == False %}
+                <td>{{ review.created_at|date:'m월 d일' }}</td>
+              {% else %}
+                <td>{{ review.created_string }}</td>
+              {% endif %}
+            </div>
 
             <!-- 로그인유저 = 글쓴이 일때만 보이는 수정, 삭제버튼 -->
             {% if request.user == review.user %}
-              <a href="{% url 'reviews:update' review.pk %}" class="btn btn-btn-outline-info">수정</a>
-              <form action="{% url 'reviews:delete' review.pk %}" method="POST">
-                {% csrf_token %}
-                <input type="submit" value="삭제" class="btn btn-btn-outline-info">
-              </form>
+              <div class="d-flex justify-content-end">
+                <a href="{% url 'reviews:update' review.pk %}" class="btn btn-btn-outline-info">수정</a>
+                <form action="{% url 'reviews:delete' review.pk %}" method="POST">
+                  {% csrf_token %}
+                  <input type="submit" value="삭제" class="btn btn-btn-outline-info">
+                </form>
+              </div>
             {% endif %}
           </div>
         </div>
@@ -41,10 +50,10 @@
 
         <!-- 로그인한 유저만 댓글 생성 -->
         {% if request.user.is_authenticated %}
-          <form id="comment-form" data-review-id="{{ review.pk }}">
+          <form action="{% url 'reviews:comment_create' review.pk %}" method="POST">
             {% csrf_token %}
-            {% bootstrap_form comment_form layout='inline'%}
-            {% bootstrap_button button_type="submit" content="작성" button_class="btn-outline-info btn-sm" %}
+            {% bootstrap_form comment_form %}
+            {% bootstrap_button button_type="submit" content="등록" button_class="btn-outline-info btn-sm" %}
           </form>
         {% endif %}
         <hr>
@@ -52,18 +61,24 @@
         <!-- 댓글 불러오기 -->
         <div id="comments">
           {% for comment in comments %}
-            <a class="text-text-decoration-none" href="{% url 'accounts:detail' comment.user.pk %}">
-              <p style="font-size:7px;">
-                {{ comment.user.username }}</p>
+            <a class="text-decoration-none" href="{% url 'accounts:detail' comment.user.pk %}">
+              <p>{{ comment.user.username }}</p>
             </a>
-            <div class="d-flex flex-row">
-              <p>{{ comment.content }}</p>
+            <div class="d-flex flex-row align-items-center">
+              {{ comment.content }}
+              <div class="ms-3 text-muted">
+                {% if review.created_string == False %}
+                  <td>{{ review.created_at|date:'m월 d일' }}</td>
+                {% else %}
+                  <td>{{ review.created_string }}</td>
+                {% endif %}
+              </div>
 
               <!-- 로그인한 유저와 댓글 작성자가 동일할 때만 보이는 삭제 버튼 -->
               {% if request.user == comment.user %}
                 <form action="{% url 'reviews:comment_delete' review.pk comment.pk %}" method="POST">
                   {% csrf_token %}
-                  <button type="submit" class="btn btn-outline-danger ms-3">
+                  <button type="submit" class="btn btn-sm btn-outline-danger ms-3">
                     <i class="bi bi-trash"></i>
                   </button>
                 </form>
@@ -80,35 +95,3 @@
   </div>
 
 {% endblock content %}
-
-{% block script %}
-  <!-- 댓글 비동기 -->
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <script>
-    const commentForm = document.querySelector('#comment-form')
-    const csrftoken = document
-      .querySelector('[name=csrfmiddlewaretoken]')
-      .value
-      commentForm
-      .addEventListener('submit', function (event) {
-        event.preventDefault();
-        axios({
-          method: 'post',
-          url: `/reviews/${event.target.dataset.reviewId}/comments/`,
-          headers: {
-            'X-CSRFToken': csrftoken
-          },
-          data: new FormData(commentForm)
-        }).then(response => {
-          console.log(response.data)
-          const comments = document.querySelector('#comments')
-          const p = document.createElement('p')
-          p.innerText = `${response.data.userName} | ${response.data.content}`
-          const hr = document.createElement('hr')
-          comments.append(p, hr)
-          commentForm.reset()
-        })
-      })
-  </script>
-
-{% endblock script %}

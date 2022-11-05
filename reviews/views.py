@@ -95,14 +95,7 @@ def comment_create(request, pk):
         comment.review = review
         comment.user = request.user
         comment.save()
-        context = {
-            'content': comment.content,
-            'userName': comment.user.username
-        }
-        return JsonResponse(context)
-    else:
-        messages.warning(request, "유효하지 않은 댓글 양식입니다.")
-        return redirect("reviews:detail", review.pk)
+    return redirect("reviews:detail", review.pk)
 
 @login_required
 def comment_delete(request, pk, comment_pk):
