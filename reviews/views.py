@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from restaurants.models import Restaurant
 from django.views.generic.list import ListView
 from django.http import HttpResponseForbidden
+from django.views.decorators.http import require_POST
 
 class ReviewsView(ListView):
     model =Review
@@ -76,12 +77,13 @@ def update(request, pk):
         # (2) flash message 활용!
         return redirect("reviews:detail", review.pk)
 
-@login_required
+@require_POST
 def delete(request, pk):
-    # pk에 해당하는 글 삭제
-    review = Review.objects.get(id=pk)
-    review.delete()
-    return redirect("reviews:index")
+    if request.user.is_authenticated:
+        review = Review.objects.get(pk=pk)
+        if request.user == review.user:
+            review.delete()
+    return redirect("restaurants:index")
 
 @login_required
 def comment_create(request, pk):
