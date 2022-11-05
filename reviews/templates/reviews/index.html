@@ -1,32 +1,52 @@
 {% extends 'base.html' %}
 {% load static %}
-{% load django_bootstrap5 %}
 {% block content %}
-  {% for review in reviews %}
-    <h1>식당이름:
-      {{ review.restaurant.name }}</h1>
-    <a href="{% url 'reviews:detail' review.pk %}">
-      {{ review.content }}
-    </a>
-    <h2>
-      {{ review.user }}</h2>
-  {% endfor %}
-  <a href="{% url 'reviews:create' %}">
-    리뷰작성
-  </a>
-{% endblock content %}
 
-
-
-<div class="background-size d-flex flex-column align-items-center justify-content-center">
-  <div class="d-flex flex-column bg-white border border-2 border border-opacity-75 border-start-0 border-end-0 rounded-4 border-secondary shadow-lg">
-    <h1 class="text-center mt-5 mb-3 fw-bold text-space">회원가입</h1>
-    <form action="" method="POST" class="p-5 border-dark" enctype="multipart/form-data">
-      {% csrf_token %}
-      {% bootstrap_form form %}
-      <div class="text-end">
-        {% bootstrap_button button_type="submit" content="가입완료" button_class="btn btn-primary" %}
-      </div>
-    </form>
-  </div>
+    
+    
+<div class="album py-5">
+    <div class="container">
+        <div class="row infinite-container">
+            {% for review in reviews %}
+                <div class="col-md-4 paint infinite-item">
+                    <div class="card mb-4 shadow-sm">
+                        <img class="img-thumbnail"  src="{{review.image.url}}"/>
+                        <div class="card-body">
+                                <p >식당이름:{{ review.restaurant.name }}</p>
+                                <h6>{{ review.user }}</h6>
+                                <a href="{% url 'reviews:detail' review.pk %}" class="card-text">{{ review.content|truncatewords:20}}</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        {% if page_obj.has_next %}
+        <a class="infinite-more-link" href="?page={{ page_obj.next_page_number }}"></a>
+        {% endif %}
+        <div class="d-flex justify-content-center" style="display:none;">
+            <div class="spinner-border text-warning" role="status">
+                <div class="sr-only"></div>
+            </div>
+        </div>
+    </div>
 </div>
+    <script src="/static/js/jquery-2.2.4.min.js"></script>
+    <script src="/static/js/jquery.waypoints.min.js"></script>
+    <script src="/static/js/infinite.min.js"></script>
+    <script>
+    var infinite = new Waypoint.Infinite({
+        element: $('.infinite-container')[0],
+        handler: function(direction) {
+        
+    },
+    offset: 'bottom-in-view',
+    onBeforePageLoad: function () {
+    $('.spinner-border').show();
+    },
+    onAfterPageLoad: function () {
+    $('.spinner-border').hide();
+    }
+});
+
+</script>
+{% endblock content %}

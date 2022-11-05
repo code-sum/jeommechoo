@@ -27,11 +27,11 @@ class Restaurant(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=1)
     like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_restaurants')
     category = models.IntegerField(default=CategorySelect.ten, choices=CategorySelect.choices)
-    image = ProcessedImageField(upload_to='images/restaurant/', blank=True,
+    image = ProcessedImageField(upload_to='images/restaurant/', blank=True,null=True,
                                 processors=[ResizeToFill(400, 300)],
                                 format='JPEG',
                                 options={'quality': 80})
-    thumbnail = ProcessedImageField(upload_to='images/restaurant/', blank=True,
+    thumbnail = ProcessedImageField(upload_to='images/restaurant/', blank=True,null=True,
                                 processors=[ResizeToFill(400, 300)],
                                 format='JPEG',
                                 options={'quality': 80})
