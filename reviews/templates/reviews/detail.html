@@ -4,58 +4,72 @@
 {% block css %}{% endblock %}
 {% block content %}
 
-<div class="container mt-3 border border-opacity-10 border-2 rounded-3">
+  <div class="container mt-3 border border-opacity-10 border-2 rounded-3">
     <div class="row">
-        <div class="col-6 d-flex justify-content-center">
-            <div class="card text-center" style="width: 20rem;">
-                <img  src="{{ review.image.url }}" alt="{{ review.image }}" class="card-img-top">
-                <div class="card-body text-start">
-                    <h5 class="card-title">식당이름:
-                        {{ review.restaurant.name }}</h5>
-                    <p class="mt-1 card-subtitle mb-2 text-muted">유저이름:
-                        {{ review.user }}</p>
-                    <p class="card-text">리뷰내용:
-                        {{ review.content }}.</p>
-                    <i class="cart-footer">평점:
-                        {{ review.get_grade_display }}</i>
-                    {% if request.user.is_authenticated %}
-                        <a href="{% url 'reviews:update' review.pk %}" class="btn btn-btn-outline-info">수정</a>
-                        <a href="{% url 'reviews:delete' review.pk %}" class="btn btn-btn-outline-info">삭제</a>
-                    
-                    {% endif %}
-                </div>
-            </div>
-        </div>
-        
-        <div class="col-6">
-            <h4 class="my-3">댓글</h4>
-            {% if comments %}
-            <span>{{ comments|length }}개의 댓글이 있습니다.</span>
-            {% endif %}
-        {% if request.user.is_authenticated %}
+      <div class="col-6 d-flex justify-content-center">
+        <div class="card text-center" style="width: 20rem;">
+          <img src="{{ review.image.url }}" alt="{{ review.image }}" class="card-img-top">
+          <div class="card-body text-start">
+            <h5 class="card-title">식당이름:
+              {{ review.restaurant.name }}</h5>
+            <p class="mt-1 card-subtitle mb-2 text-muted">유저이름:
+              {{ review.user }}</p>
+            <p class="card-text">리뷰내용:
+              {{ review.content }}.</p>
+            <i class="cart-footer">평점:
+              {{ review.get_grade_display }}</i>
+            {% if request.user.is_authenticated %}
+              <a href="{% url 'reviews:update' review.pk %}" class="btn btn-btn-outline-info">수정</a>
+              <a href="{% url 'reviews:delete' review.pk %}" class="btn btn-btn-outline-info">삭제</a>
 
-            <form action="{% url 'reviews:comment_create' review.pk %}" method="POST">
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+      <div class="col-6">
+        <h4 class="my-3">댓글</h4>
+        {% if comments %}
+          <span>{{ comments|length }}개의 댓글이 있습니다.</span>
+        {% endif %}
+
+        <!-- 로그인한 유저만 댓글 생성 -->
+        {% if request.user.is_authenticated %}
+          <form action="{% url 'reviews:comment_create' review.pk %}" method="POST">
             {% csrf_token %}
             {% bootstrap_form comment_form layout='inline'%}
             {% bootstrap_button button_type="submit" content="작성" button_class="btn-outline-info btn-sm" %}
-            </form>
-            <hr>
-            {% for comment in comments %}
-            <p style="font-size:7px;">
-                {{ comment.user.username }}
-            </p>
-            <p>{{ comment.content }}
-                <a href="{% url 'reviews:comment_delete' comment.review.pk comment.pk %}" class="btn btn-outline-info btn-sm">삭제</a>
-            </p>
+          </form>
+          <hr>
 
+          <!-- 댓글 불러오기 -->
+          {% for comment in comments %}
+            <a class="text-text-decoration-none" href="{% url 'accounts:detail' comment.user.pk %}">
+              <p style="font-size:7px;">
+                {{ comment.user.username }}</p>
+            </a>
+            <div class="d-flex flex-row">
+              <p>{{ comment.content }}</p>
+
+              <!-- 로그인한 유저와 댓글 작성자가 동일할 때만 보이는 삭제 버튼 -->
+              {% if request.user == comment.user %}
+                <form action="{% url 'reviews:comment_delete' review.pk comment.pk %}" method="POST">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-outline-danger ms-3">
+                    <i class="bi bi-trash"></i>
+                  </button>
+                </form>
+              {% endif %}
+            </div>
             <hr>
             {% empty %}
             <p>댓글이 없어요 ㅠ_ㅠ</p>
-            {% endfor %}
-        {% else %}
+          {% endfor %}
+
         {% endif %}
-        </div>
+      </div>
     </div>
-</div>
+  </div>
+
 {% endblock content %}
 {% bootstrap_javascript %}
