@@ -13,6 +13,16 @@ def search(request):
     if request.method == 'POST':
         searched = request.POST['searched']        
         restaurants = Restaurant.objects.filter(name__contains=searched)
-        return render(request, 'searched.html', {'searched': searched, 'restaurants': restaurants})
+        
+        if  len(searched) == 0:
+            restaurants = []
+            text = "검색어를 입력하세요."
+
+        elif len(restaurants) == 0:
+            text = "검색 결과가 없습니다."
+            
+        else:
+            text = ""
+        return render(request, 'searched.html', {'restaurants': restaurants,'text':text})
     else:
         return render(request, 'searched.html', {})

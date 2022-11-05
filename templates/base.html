@@ -48,7 +48,7 @@
                 <a class="nav-link" href="#">랜덤메뉴</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'reviews:index' %}">리뷰목록</a>
+                <a class="nav-link" href="{% url 'accounts:reviewlist' %}">리뷰목록</a>
               </li>
             </ul>
             {% if request.user.is_authenticated %}

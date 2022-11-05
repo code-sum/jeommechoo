@@ -1,20 +1,13 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  {% if searched %}
-    <h1>
-      검색하신
-      {{ searched }}
-      식당 정보입니다.
-    </h1>
-    <br>
+ 
     {% for restaurant in restaurants %}
-      {{ restaurant.name }}
+      <a href="{% url 'restaurants:detail' restaurant.pk %}">
+        <img src="{{ restaurant.thumbnail.url }}" class="img-fluid rounded-top" alt="">
+      </a>
+      <p>{{ restaurant.name }}</p>
       <br>
     {% endfor %}
-  {% else %}
-    <h1>
-      찾고 있는 식당 이름을 검색창에 입력해주세요.
-    </h1>
-  {% endif %}
+    <h3 class="mt-5 text-center">{{ text }}</h3>
 {% endblock %}
