@@ -1,10 +1,13 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from reviews.models import Review, Comment
 from .forms import ReviewForm, CommentForm
 from django.contrib.auth.decorators import login_required
 from restaurants.models import Restaurant
 from django.views.generic.list import ListView
-# Create your views here.
+from django.http import HttpResponseForbidden, JsonResponse
+from django.views.decorators.http import require_POST
+from django.contrib import messages
+
 class ReviewsView(ListView):
     model =Review
     paginate_by = 3
@@ -75,19 +78,17 @@ def update(request, pk):
         # (2) flash message 활용!
         return redirect("reviews:detail", review.pk)
 
-
-@login_required
+@require_POST
 def delete(request, pk):
-    # pk에 해당하는 글 삭제
-    review = Review.objects.get(id=pk)
-    review.delete()
-    return redirect("reviews:index")
-
-
+    if request.user.is_authenticated:
+        review = Review.objects.get(pk=pk)
+        if request.user == review.user:
+            review.delete()
+    return redirect("restaurants:index")
 
 @login_required
 def comment_create(request, pk):
-    review = Review.objects.get(pk=pk)
+    review = get_object_or_404(Review, pk=pk)
     comment_form = CommentForm(request.POST)
     if comment_form.is_valid():
         comment = comment_form.save(commit=False)
@@ -95,10 +96,13 @@ def comment_create(request, pk):
         comment.user = request.user
         comment.save()
     return redirect("reviews:detail", review.pk)
+
 @login_required
 def comment_delete(request, pk, comment_pk):
-    comment = Comment.objects.get(pk=comment_pk)
-
+    comment = get_object_or_404(Comment, pk=comment_pk)
     if comment.user == request.user:
-        comment.delete()
-    return redirect("reviews:detail", pk)
+        if request.method == 'POST':
+            comment.delete()
+            return redirect("reviews:detail", pk)
+    else:
+        return HttpResponseForbidden()
