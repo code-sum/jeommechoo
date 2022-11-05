@@ -49,7 +49,7 @@
                     <h5 class="card-title text-bold">{{ restaurant.name }}</h5>
                   </a>
                 </div>
-                <div>
+                <div class="text-secondary">
                   <p>{{ restaurant.address }}</p>
                 </div>
               </div>
@@ -57,9 +57,15 @@
                 <h3>{{ restaurant.avg_grade }}</h3>
               </div>
             </div>
-            <div class="m-2">
-              <i class="bi bi-pencil-fill"></i>
-              <span>{{ restaurant.reviews_count }}</span>
+            <div class="m-2 d-flex flex-row text-secondary">
+              <div>
+                <i class="bi bi-pencil-fill"></i>
+                <span>{{ restaurant.reviews_count }}</span>
+              </div>
+              <div class="mx-3">
+                <i class="bi bi-heart-fill"></i>
+                <span>{{ restaurant.like_users.count }}</span>
+              </div>
             </div>
           </div>
         </div>
