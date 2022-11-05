@@ -26,3 +26,6 @@ def search(request):
         return render(request, 'searched.html', {'restaurants': restaurants,'text':text})
     else:
         return render(request, 'searched.html', {})
+
+def menuchoice(request):
+    return render(request,'menuchoice.html')
