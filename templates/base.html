@@ -36,7 +36,9 @@
       <nav class="navbar navbar-expand-lg" style="background-color:#F7D7C8;">
 
         <div class="container-fluid">
-          <a class="navbar-brand" href="{% url 'main' %}">메인화면</a>
+          <a class="navbar-brand" href="{% url 'main' %}">
+            <img src="{% static 'images/semi.png' %}" style="width: 200px;" alt="logo">
+          </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
