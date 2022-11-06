@@ -42,6 +42,7 @@
           <a href="{% url 'accounts:signup' %}" class="btn btn-success">회원가입</a>
           {% bootstrap_button button_class="btn btn-primary" button_type="submit" content="로그인" %}
         </form>
+        <a class="text-center" href="{% url 'restaurants:index' %}">Home</a>
       </div>
     {% endif %}
   </div>

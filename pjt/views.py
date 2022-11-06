@@ -28,6 +28,7 @@ def search(request):
     else:
         return render(request, 'searched.html', {})
 
+
 def randomm(request):
     categogies = [
         '한식', '중식', '프렌치', '이탈리안', '스페니쉬', 
