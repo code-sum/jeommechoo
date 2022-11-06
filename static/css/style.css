@@ -180,3 +180,11 @@ body {
 .collapseProfile {
     border-radius: 3rem;
 }
+
+
+/* random.html */
+.box-with-text {
+    background-image: url(https://i.pinimg.com/originals/7c/36/80/7c3680f8a53fbac84dfb4a7f0c1f1942.gif);
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+  }

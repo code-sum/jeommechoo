@@ -17,6 +17,12 @@ class ReviewForm(forms.ModelForm):
             'grade': '평점', 
         }
 class CommentForm(forms.ModelForm):
+    content = forms.CharField(
+        label="",
+        widget=forms.TextInput(attrs={
+            "placeholder": "100자 이내로 작성해주세요.",
+        })
+    )
     class Meta:
         model = Comment
         fields = [

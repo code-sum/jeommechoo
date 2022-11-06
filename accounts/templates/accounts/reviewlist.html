@@ -11,15 +11,16 @@
       <div class="card flex-wrap position-relative" style="width: 20rem; height: 17rem;">
 
         {% for changelog in date.list %}
-          <p class="m-auto">
-            <img src="{{ changelog.image.url }}" alt="{{ changelog.image }}" style="border: 4px solid rgba(221, 177, 177, 0.396); border-radius: 1rem;">
-          </p>
+          <a href="{% url 'accounts:detail' changelog.pk %}">
+            <p class="m-auto">
+              <img src="{{ changelog.image.url }}" alt="{{ changelog.image }}" style="border: 4px solid rgba(221, 177, 177, 0.396); border-radius: 1rem;">
+            </p>
+          </a>
         {% endfor %}
         <div class="position-absolute top-50 start-50 translate-middle">
           <p class="badge bg-secondary">{{ date.grouper }}</p>
         </div>
-      </div>
 
-    </div>
-  {% endfor %}
-{% endblock content %}
+      </div>
+    {% endfor %}
+  {% endblock content %}
