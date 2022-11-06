@@ -3,24 +3,26 @@
 {% load django_bootstrap5 %}
 
 {% block content %}
-  <div class="flex flex-wrap">
+  <div class="container py-5">
+    <div class="flex flex-wrap align-items-center">
 
-    {% regroup reviews by user.username as dates_items %}
-    {% for date in dates_items %}
+      {% regroup reviews by user.username as dates_items %}
+      {% for date in dates_items %}
 
-      <div class="card flex-wrap position-relative" style="width: 20rem; height: 17rem;">
+        <div class="card flex-wrap justify-content-around align-items-center position-relative" style="width: 20rem; height: 17rem;">
 
-        {% for changelog in date.list %}
-          <a href="{% url 'accounts:detail' changelog.pk %}">
-            <p class="m-auto">
-              <img src="{{ changelog.image.url }}" alt="{{ changelog.image }}" style="border: 4px solid rgba(221, 177, 177, 0.396); border-radius: 1rem;">
-            </p>
-          </a>
-        {% endfor %}
-        <div class="position-absolute top-50 start-50 translate-middle">
-          <p class="badge bg-secondary">{{ date.grouper }}</p>
+          {% for changelog in date.list %}
+            <a href="{% url 'accounts:detail' changelog.pk %}">
+              <p class="m-auto">
+                <img src="{{ changelog.image.url }}" alt="{{ changelog.image }}" style="border: 4px solid rgba(221, 177, 177, 0.396); border-radius: 1rem;">
+              </p>
+            </a>
+          {% endfor %}
+          <div class="position-absolute top-50 start-50 translate-middle">
+            <p class="badge bg-secondary">{{ date.grouper }}</p>
+          </div>
+
         </div>
-
-      </div>
-    {% endfor %}
+      {% endfor %}
+    </div>
   {% endblock content %}

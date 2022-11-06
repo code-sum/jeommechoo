@@ -57,9 +57,9 @@
             {% if request.user.is_authenticated %}
                 {% if user.profileimg %}
                 <a href="{% url 'accounts:detail' user.pk %}"><img src="{{ user.profileimg.url }}" style="margin-right:5px; border-radius: 10rem; width: 3rem; height: 3rem;"></a>
-                <span style="margin-right:10px;">&nbsp;&nbsp;{{ user }}</span>
+                <span class="" style="margin-right:10px;">&nbsp;&nbsp;{{ user }}</span>
                 {% else %}
-                <a href="{% url 'accounts:detail' user.pk %}"><img style="margin-right:5px; border-radius: 10rem; width: 3rem; height: 3rem;" src="https://archive.org/download/no-photo-available/no-photo-available.png"></a>
+                <a href="{% url 'accounts:detail' user.pk %}"><img style="margin-right:5px; border-radius: 10rem; width: 3rem; height: 3rem;" src="https://img1.daumcdn.net/thumb/R1280x0/?fname=http://t1.daumcdn.net/brunch/service/user/7r5X/image/9djEiPBPMLu_IvCYyvRPwmZkM1g.jpg"></a>
                 <span style="margin-right:10px;">{{ user }}</span>
                 {% endif %}
             {% else %}

@@ -9,7 +9,7 @@
       {% if user.profileimg %}
         <img src="{{ user.profileimg.url }}" alt="{{ user.profileimg }}" width="200" height="200" class="rounded-circle my-3">
       {% else %}
-        <img src="https://archive.org/download/no-photo-available/no-photo-available.png" alt="none" width="230" height="200" class="rounded-circle my-3">
+        <img src="https://img1.daumcdn.net/thumb/R1280x0/?fname=http://t1.daumcdn.net/brunch/service/user/7r5X/image/9djEiPBPMLu_IvCYyvRPwmZkM1g.jpg" alt="none" width="150" height="150" class="rounded-circle my-3">
       {% endif %}
       <div class="d-flex flex-column justify-content-center profile-size">
         <div class="mt-3 d-md-flex justify-content-center align-items-center">
@@ -173,7 +173,7 @@
               headers: {
                 'X-CSRFToken': csrftoken
               }
-            });
+            })
             .then((response) => {
                 const isFollowed = response.data.is_followed
                 const followBtn = document.querySelector('#follow-form > input[type=submit]')
@@ -200,10 +200,10 @@
                 const followingsCount = response.data.followings_count
                 followersCountTag.innerText = followersCount
                 followingsCountTag.innerText = followingsCount
-              });
+              })
             .catch((error) => {
               console.log(error.response)
-            });
+            })
         });
     </script>
     <script>
