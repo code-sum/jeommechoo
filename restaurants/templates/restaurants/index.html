@@ -1,90 +1,129 @@
 {% extends 'base.html' %}
 {% block content %}
-
-  <!-- 카테고리 셀렉트박스/식당등록버튼 같은 div에 넣어서 양쪽 사이드배치 -->
-  <div class="d-flex justify-content-between align-items-center mt-3">
-    <!-- 셀렉트박스 -->
-    <div class="ms-3">
-      <select onchange="location = this.value;" class="form-select" id="floatingSelect" aria-label="Floating label select example">
-        <option>식당분류</option>
-        <option value="/restaurants/">최신등록순</option>
-        <option value="?sort=1">한식</option>
-        <option value="?sort=2">중식</option>
-        <option value="?sort=3">프렌치</option>
-        <option value="?sort=4">이탈리안</option>
-        <option value="?sort=5">스페니쉬</option>
-        <option value="?sort=6">아메리칸</option>
-        <option value="?sort=7">튀르키예</option>
-        <option value="?sort=8">디저트</option>
-        <option value="?sort=9">멕시칸</option>
-        <option value="?sort=10">최준홍님 pick!</option>
-        <option value="?sort=11">일식</option>
-      </select>
-    </div>
-    <!-- 관리자에게만 보이는 식당등록버튼 -->
-    {% if user.is_superuser %}
-      <div class="me-5">
-        <a href="{% url 'restaurants:create' %}" class="btn btn-primary">식당등록</a>
-      </div>
-    {% endif %}
-  </div>
-
-  <!-- 등록된 식당 목록 -->
   <div class="background-size">
-    <div class="container row row-cols-1 row-cols-md-3">
-      {% for restaurant in restaurants %}
-        <div class="col g-4">
-          <div class="card h-100">
+    <!-- 카테고리 셀렉트박스/식당등록버튼 같은 div에 넣어서 양쪽 사이드배치 -->
+    <div class="ms-3 d-flex justify-content-between align-items-center mt-3">
+      <!-- 셀렉트박스 -->
+      <div class="ms-3">
+        <select onchange="location = this.value;" class="form-select" id="floatingSelect" aria-label="Floating label select example">
+          <option>식당분류</option>
+          <option value="/restaurants/">최신등록순</option>
+          <option value="?sort=1">한식</option>
+          <option value="?sort=2">중식</option>
+          <option value="?sort=3">프렌치</option>
+          <option value="?sort=4">이탈리안</option>
+          <option value="?sort=5">스페니쉬</option>
+          <option value="?sort=6">아메리칸</option>
+          <option value="?sort=7">튀르키예</option>
+          <option value="?sort=8">디저트</option>
+          <option value="?sort=9">멕시칸</option>
+          <option value="?sort=10">최준홍님 pick!</option>
+          <option value="?sort=11">일식</option>
+        </select>
+      </div>
+      <!-- 관리자에게만 보이는 식당등록버튼 -->
+      {% if user.is_superuser %}
+        <div class="me-3">
+          <a href="{% url 'restaurants:create' %}" class="btn" style="background-color: #FDED94">식당등록</a>
+        </div>
+      {% endif %}
+    </div>
+
+    <!-- 등록된 식당 목록 -->
+
+    <div class="d-flex justify-content-between">
+      <div class="wrapper justify-content-center">
+        {% for restaurant in restaurants %}
+          <div class="d-none d-lg-block menu-card menu-image-md">
             {% if restaurant.image %}
-              <a href="{% url 'restaurants:detail' restaurant.pk %}"><img src="{{ restaurant.thumbnail.url }}" class="card-img-top position-relative" alt="{{ restaurant.thumbnail }}">
-                <div class="image-hover position-absolute"></div>
+              <a href="{% url 'restaurants:detail' restaurant.pk %}"><img src="{{ restaurant.thumbnail.url }}" class="card-img-top rounded-5" alt="{{ restaurant.thumbnail }}">
               </a>
             {% else %}
-              <a href="{% url 'restaurants:detail' restaurant.pk %}"><img src="https://archive.org/download/no-photo-available/no-photo-available.png" class="card-img-top" alt="none"></a>
+              <a href="{% url 'restaurants:detail' restaurant.pk %}"><img src="https://archive.org/download/no-photo-available/no-photo-available.png" class="card-img-top rounded-5" style="" alt="none"></a>
             {% endif %}
-            <div class="card-body d-flex flex-row justify-content-between">
-              <div class="d-flex flex-column">
-                <div>
+            <div class="font-md-card" id="menu-text-md">
+              <div class="card-body">
+                <div class="d-flex flex-column">
                   <a class="text-decoration-none" href="{% url 'restaurants:detail' restaurant.pk %}">
-                    <h5 class="card-title text-bold">{{ restaurant.name }}</h5>
+                    <h5 class="card-title text-bold text-white">{{ restaurant.name }}</h5>
                   </a>
+                  <div class="text-secondary text-white">
+                    <p style="font-size: 15px;">{{ restaurant.address }}</p>
+                  </div>
                 </div>
-                <div class="text-secondary">
-                  <p>{{ restaurant.address }}</p>
+              </div>
+
+              <div class="d-flex justify-content-between">
+                <div class="m-2 d-flex flex-row text-secondary">
+                  <div>
+                    <i class="bi bi-pencil-fill text-white"></i>
+                    <span class="text-white">{{ restaurant.reviews_count }}</span>
+                  </div>
+                  <div class="mx-3">
+                    <i class="bi bi-heart-fill text-danger"></i>
+                    <span class="text-white">{{ restaurant.like_users.count }}</span>
+                  </div>
                 </div>
-              </div>
-              <div>
-                <h3>{{ restaurant.avg_grade|floatformat:1 }}</h3>
-              </div>
-            </div>
-            <div class="m-2 d-flex flex-row text-secondary">
-              <div>
-                <i class="bi bi-pencil-fill"></i>
-                <span>{{ restaurant.reviews_count }}</span>
-              </div>
-              <div class="mx-3">
-                <i class="bi bi-heart-fill"></i>
-                <span>{{ restaurant.like_users.count }}</span>
+                <div class="d-flex">
+                  <i class="fs-5 bi bi-star-fill text-warning"></i>
+                  &nbsp;<h3 class="text-white">{{ restaurant.avg_grade|floatformat:1 }}</h3>
+                </div>
               </div>
             </div>
           </div>
+          <div class="d-block d-lg-none menu-card-sm menu-image m-3">
+            {% if restaurant.image %}
+              <a href="{% url 'restaurants:detail' restaurant.pk %}"><img src="{{ restaurant.thumbnail.url }}" class="card-img-top rounded-5" alt="{{ restaurant.thumbnail }}">
+              </a>
+            {% else %}
+              <a href="{% url 'restaurants:detail' restaurant.pk %}"><img src="https://archive.org/download/no-photo-available/no-photo-available.png" class="card-img-top rounded-5" style="width: 400px; height: 300px;" alt="none"></a>
+            {% endif %}
+            <div class="" id="menu-text">
+              <div class="card-body">
+                <div class="d-flex flex-column">
+                  <a class="text-decoration-none" href="{% url 'restaurants:detail' restaurant.pk %}">
+                    <h5 class="card-title text-bolder text-white">{{ restaurant.name }}</h5>
+                  </a>
+                  <p class="text-white">{{ restaurant.address }}</p>
+                </div>
+              </div>
+              <div class="d-flex justify-content-between">
+                <div class="m-2 d-flex flex-row text-white">
+                  <div>
+                    <i class="bi bi-pencil-fill"></i>
+                    <span>{{ restaurant.reviews_count }}</span>
+                  </div>
+                  <div class="mx-3">
+                    <i class="bi bi-heart-fill text-danger"></i>
+                    <span>{{ restaurant.like_users.count }}</span>
+                  </div>
+                </div>
+                <div class="d-flex">
+                  <i class="fs-5 bi bi-star-fill text-warning"></i>
+                  &nbsp;<h3 class="text-white">{{ restaurant.avg_grade|floatformat:1 }}</h3>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+
+      <!-- 평점 높은 식당 목록 -->
+      <aside class="col-sm-3 col-2 d-none d-md-block">
+        <div class="aside-position container rounded-4 border border-3 border-dark text-center p-3 recommend-list" style="width: 13em;">
+          <p>
+            <b>인기순위</b>
+          </p>
+          {% for ranker in rankers %}
+            <div class="d-flex justify-content-between align-items-center follow-font">
+              <p class="text-start m-1">{{ ranker.name }}
+              <div class="d-flex align-items-center"><i class="fs-6 bi bi-star-fill text-warning"></i>&nbsp;{{ ranker.avg_grade|floatformat:1 }}</p></div>
+            </div>
+            <hr class="m-0">
+          {% endfor %}
         </div>
-      {% endfor %}
+      </aside>
     </div>
   </div>
-
-  <!-- 평점 높은 식당 목록 -->
-  <aside>
-    <div>
-      <p>
-        <b>인기순위</b>
-      </p>
-      {% for ranker in rankers %}
-        <p>{{ ranker.name }}
-          |
-          {{ ranker.avg_grade|floatformat:1 }}</p>
-      {% endfor %}
-    </div>
-  </aside>
 
 {% endblock content %}
