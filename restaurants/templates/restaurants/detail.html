@@ -40,7 +40,7 @@
           .maps
           .LatLng(lat, lng),
         icon: {
-          url: '{% static 'images/marker.png' %}', //50, 68 크기의 원본 이미지
+          url: '{% static ' images / marker.png ' %}', //50, 68 크기의 원본 이미지
           size: new naver
             .maps
             .Size(50, 60),
@@ -106,7 +106,7 @@
           </div>
         </div>
         <!-- 리뷰 평점 -->
-        {{ avg_grade }}
+        {{ avg_grade|floatformat:1 }}
         <h1 class="pt-3 pb-2 follow-font fw-bolder">{{ restaurant.name }}</h1>
         <p class="follow-font text-centerfw-normal mb-1">{{ restaurant.get_category_display }}</p>
         <p class="follow-font text-centerfw-normal mb-1">
@@ -165,4 +165,3 @@
   })
 </script>
 {% endblock script %}
-

@@ -54,7 +54,7 @@
                 </div>
               </div>
               <div>
-                <h3>{{ restaurant.avg_grade }}</h3>
+                <h3>{{ restaurant.avg_grade|floatformat:1 }}</h3>
               </div>
             </div>
             <div class="m-2 d-flex flex-row text-secondary">
@@ -82,7 +82,7 @@
       {% for ranker in rankers %}
         <p>{{ ranker.name }}
           |
-          {{ ranker.avg_grade }}</p>
+          {{ ranker.avg_grade|floatformat:1 }}</p>
       {% endfor %}
     </div>
   </aside>
