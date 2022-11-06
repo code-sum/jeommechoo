@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+  <div class="text-center">
+    <div class="box-with-text">
+      <p class="fs-1 mt-5 fw-semibold">오늘 뭐 먹지?</p>
+    </div>
+  </div>
+  <div>
+    <div class="text-center">
+      <button id="reset-btn" class="btn btn-danger">🐷메뉴 선택</button>
+    </div>
+    <h3 class="mt-1 fw-semibold text-center">추천메뉴는
+      <span class="text-danger">{{ menu }}</span>
+      입니다!</h3>
+    <div class="text-center">
+      <img src="{{ imgs }}" class="rounded img-fluid w-50" alt="dinner">
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block script %}
+  <script>
+    const reset = document.querySelector('#reset-btn')
+    reset.addEventListener('click', function () {
+      window
+        .location
+        .reload()
+    })
+  </script>
+{% endblock script %}
