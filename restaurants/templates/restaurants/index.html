@@ -24,7 +24,7 @@
       <!-- 관리자에게만 보이는 식당등록버튼 -->
       {% if user.is_superuser %}
         <div class="me-3">
-          <a href="{% url 'restaurants:create' %}" class="btn" style="background-color: #FDED94">식당등록</a>
+          <a href="{% url 'restaurants:create' %}" class="btn rounded-pill" style="background-color: #FDED94">식당등록</a>
         </div>
       {% endif %}
     </div>
@@ -110,9 +110,9 @@
 
       <!-- 평점 높은 식당 목록 -->
       <aside class="col-sm-3 col-2 d-none d-md-block">
-        <div class="aside-position container rounded-4 border border-3 border-dark text-center p-3 recommend-list" style="width: 13em;">
+        <div class="aside-position container rounded-4 shadow-lg text-center p-3 recommend-list" style="width: 13em; border: 2px solid #C2BFBB;">
           <p>
-            <b>인기순위</b>
+            <b>실시간 핫플</b>
           </p>
           {% for ranker in rankers %}
             <div class="d-flex justify-content-between align-items-center follow-font">

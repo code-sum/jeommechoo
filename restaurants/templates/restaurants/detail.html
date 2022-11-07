@@ -40,7 +40,7 @@
           .maps
           .LatLng(lat, lng),
         icon: {
-          url: '{% static ' images / marker.png ' %}', //50, 68 크기의 원본 이미지
+          url: '{% static 'images/marker.png' %}', //50, 68 크기의 원본 이미지
           size: new naver
             .maps
             .Size(50, 60),
@@ -113,22 +113,45 @@
         <div class="d-flex justify-content-center mb-1">
           <i class="bi bi-tags-fill"></i>&nbsp;<p class="follow-font text-centerfw-normal mb-1">{{ restaurant.get_category_display }}</p>
         </div>
-        <p class="follow-font text-centerfw-normal mb-2">
+        <p class="follow-font text-center fw-normal mb-2">
           <i class="bi bi-shop fw-bold"></i>&nbsp;&nbsp;{{ restaurant.address }}</p>
         <p class="follow-font text-primary fw-semibold opacity-75 mb-2">
           <i class="bi bi-telephone-forward-fill"></i>&nbsp;&nbsp;&nbsp;{{ restaurant.phone }}</p>
 
-        <div class="card-footer rounded-pill shadow-sm" style="background-color: #F2E0E0">
+        <div class="card-footer rounded-pill shadow-sm" style="background-color: #F2E0E0;">
           <a href="{% url 'reviews:create' restaurant.pk %}" class="text-decoration-none text-dark follow-font">리뷰작성</a>
         </div>
       </div>
     </div>
 
-    <div class="container row row-cols-1 row-cols-sm-2">
+    <div class="p-3 w-100 row-cols-1">
       {% for review in reviews %}
-        <div class="col card p-3">
-          <div class="card-body text-center">
-            <a href="{% url 'reviews:detail' review.pk %}" class="text-decoration-none">{{ review.content }}</a>
+        <div class="container w-100 shadow-sm card p-3 my-3 d-flex flex-column justify-content-center">
+          <a href="{% url 'reviews:detail' review.pk %}" class="text-decoration-none w-100 d-flex m-2 ps-0 p-3 justify-content-between align-items-center text-truncate" style="background-color: #white;">
+            <div>
+              {% if not review.image %}
+                <div></div>
+              {% else %}
+                <div class="text-center">
+                  <img src="{{ review.image.url }}" alt="" style="border-radius: 10rem;">
+                </div>
+              {% endif %}
+            </div>
+            <div class="text-truncate ms-5 ps-5 pb-1">
+              <div class="text-truncate text-decoration-none">{{ review.content }}</div>
+            </div>
+          </a>
+          <hr class="m-0 mb-3">
+          <a href="{% url 'accounts:detail' review.user.pk %}" class="text-decoration-none d-flex justify-content-end">
+            {% if review.user.profileimg %}
+              <p class="px-3 py-2 rounded-pill bg-dark text-light"><img src="{{ review.user.profileimg.url }}" alt="" style="width: 25px; height: 25px; border-radius: 10rem;">&nbsp;&nbsp;{{ review.user }}</p>
+            {% else %}
+              <p class="px-3 py-2 rounded-pill bg-dark text-light"><img src="https://img1.daumcdn.net/thumb/R1280x0/?fname=http://t1.daumcdn.net/brunch/service/user/7r5X/image/9djEiPBPMLu_IvCYyvRPwmZkM1g.jpg" alt="" style="width: 25px; height: 25px; border-radius: 10rem;">&nbsp;&nbsp;{{ review.user }}</p>
+            {% endif %}
+          </a>
+          <div class="text-end">
+            <p class="m-0 text-secondary" style="font-size: 10px;">마지막 수정일 :
+              {{ review.updated_at }}</p>
           </div>
         </div>
       {% endfor %}
