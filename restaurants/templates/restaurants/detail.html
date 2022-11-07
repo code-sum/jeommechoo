@@ -61,15 +61,15 @@
   <div class="restaurant-detail-size">
     <!-- 식당 이미지 -->
     <div class="d-none d-sm-block d-sm-flex justify-content-sm-center thumbnail-position">
-      {% if restaurant.thumbnail %}
-        <img src="{{ restaurant.thumbnail.url }}" class="thumbnail-image" style="border: 4px solid rgba(221, 177, 177, 0.396); border-radius: 1rem;" alt="{{ restaurant.thumbnail }}">
+      {% if restaurant.image %}
+        <img src="{{ restaurant.image.url }}" class="thumbnail-image" style="border: 4px solid rgba(221, 177, 177, 0.396); border-radius: 1rem;" alt="{{ restaurant.image }}">
       {% else %}
         <img src="https://archive.org/download/no-photo-available/no-photo-available.png" class="dummy-image" style="border: 4px solid rgba(221, 177, 177, 0.396); border-radius: 1rem;" alt="none">
       {% endif %}
     </div>
     <div class="d-block d-sm-none d-flex justify-content-center thumbnail-position">
-      {% if restaurant.thumbnail %}
-        <img src="{{ restaurant.thumbnail.url }}" class="thumbnail-image" style="border: 4px solid rgba(221, 177, 177, 0.396); border-radius: 1rem;" alt="{{ restaurant.thumbnail }}">
+      {% if restaurant.image %}
+        <img src="{{ restaurant.image.url }}" class="thumbnail-image" style="border: 4px solid rgba(221, 177, 177, 0.396); border-radius: 1rem;" alt="{{ restaurant.image }}">
       {% else %}
         <img src="https://archive.org/download/no-photo-available/no-photo-available.png" class="dummy-image" style="border: 4px solid rgba(221, 177, 177, 0.396); border-radius: 1rem;" alt="none">
       {% endif %}

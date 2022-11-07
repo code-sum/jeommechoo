@@ -35,7 +35,7 @@
       <div class="wrapper justify-content-center">
         {% for restaurant in restaurants %}
           <div class="d-none d-lg-block menu-card menu-image-md">
-            {% if restaurant.image %}
+            {% if restaurant.thumbnail %}
               <a href="{% url 'restaurants:detail' restaurant.pk %}"><img src="{{ restaurant.thumbnail.url }}" class="card-img-top rounded-5" alt="{{ restaurant.thumbnail }}">
               </a>
             {% else %}
