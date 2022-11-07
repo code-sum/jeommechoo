@@ -4,7 +4,12 @@
  
     {% for restaurant in restaurants %}
       <a href="{% url 'restaurants:detail' restaurant.pk %}">
+        {% if not restaurant.thumbnail %}   
+        <img src="https://archive.org/download/no-photo-available/no-photo-available.png" class="img-fluid rounded-top" style="width:400px; height:300px;" alt="">
+        {% else %}
         <img src="{{ restaurant.thumbnail.url }}" class="img-fluid rounded-top" alt="">
+        {% endif %}
+        
       </a>
       <p>{{ restaurant.name }}</p>
       <br>
