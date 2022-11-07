@@ -21,74 +21,86 @@
   <body>
     <!--nav-->
     {% block nav %}
-      <div class="justify-content-center position-relative align-items-center my-3">
-        <div class="row">
-            <div class="col"></div>
-        <div class="col-4">
-            <form class="d-flex justify-content-center position-relative align-items-center my-3" method="POST" action="{% url 'search' %}">
-                {% csrf_token %}
-                <div class="search-bar" style="color:teal;" >
-                    <i class="bi bi-search"></i>
-                    <input class="search-bar__input" style="input-color:tomato;" type="search" placeholder="         식당검색" name="searched" aria-label="Search"/>
-                </div>
-            </form>
-        </div>
+    </div>
+
+    <nav class="navbar navbar-expand-lg" style="background-color:#F7D7C8;">
+
+      <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'main' %}">
+          <img src="{% static 'images/semi.png' %}" style="width: 200px;" alt="logo">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'restaurants:index' %}">식당목록</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'random' %}">랜덤메뉴</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'accounts:reviewlist' %}">리뷰 모아보기</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'reviews:index' %}">실시간 리뷰</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'developers' %}">입점문의</a>
+            </li>
+          </ul>
+
           {% if request.user.is_authenticated %}
-            <div class="col d-flex justify-content-end text-center me-5">
-                <a href="{% url 'accounts:detail' user.pk %}" id="collapse1" class="collapse collapse-horizontal btn btn-outline-info text-white rounded-pill "><i class="bi bi-box-arrow-in-right">Profiile</i></a>
-                <a href="{% url 'accounts:logout' %}" id="collapse1" class="collapse collapse-horizontal btn btn-outline-warning rounded-pill text-white"><i class="bi bi-box-arrow-right">Logout</i></a>
-            </div>
-        {% else %}
-            <div class="col d-flex justify-content-end text-center me-5">
-                <a href="{% url 'accounts:signup' %}" id="collapse2" class="collapse collapse-horizontal btn btn-outline-info rounded-pill text-white "><i class="bi bi-box-arrow-in-right">Signup</i></a>
-                <a href="{% url 'accounts:login' %}" id="collapse2" class="collapse collapse-horizontal btn btn-outline-warning text-white rounded-pill "><i class="bi bi-box-arrow-right">Login</i></a>
-            </div>
-        {% endif %}
-    </div>
-    </div>
-
-      <nav class="navbar navbar-expand-lg" style="background-color:#F7D7C8;">
-
-        <div class="container-fluid">
-          <a class="navbar-brand" href="{% url 'main' %}">
-            <img src="{% static 'images/semi.png' %}" style="width: 200px;" alt="logo">
-          </a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'restaurants:index' %}">식당목록</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'random' %}">랜덤메뉴</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'accounts:reviewlist' %}">리뷰목록</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'developers' %}">입점문의</a>
-              </li>
-            </ul>
-
-            {% if request.user.is_authenticated %}
-                {% if user.profileimg %}
-                <a data-bs-toggle="collapse" data-bs-target="#collapse1" aria-expanded="false" aria-controls="collapse1"><img src="{{ user.profileimg.url }}" style="margin-right:5px; border-radius: 10rem; width: 3rem; height: 3rem;"></a>
-                <span class="" style="margin-right:10px;">&nbsp;&nbsp;{{ user }}</span>
-                {% else %}
-                <a data-bs-toggle="collapse" data-bs-target="#collapse1" aria-expanded="false" aria-controls="collapse1"><img style="margin-right:5px; border-radius: 10rem; width: 3rem; height: 3rem;" src="https://img1.daumcdn.net/thumb/R1280x0/?fname=http://t1.daumcdn.net/brunch/service/user/7r5X/image/9djEiPBPMLu_IvCYyvRPwmZkM1g.jpg"></a>
-                <span style="margin-right:10px;">{{ user }}</span>
-              {% endif %}
+            {% if user.profileimg %}
+              <a data-bs-toggle="collapse" data-bs-target="#collapse1" aria-expanded="false" aria-controls="collapse1"><img src="{{ user.profileimg.url }}" style="margin-right:5px; border-radius: 10rem; width: 3rem; height: 3rem;"></a>
+              <span class="" style="padding-right: 20px;">&nbsp;&nbsp;{{ user }}</span>
             {% else %}
-                <a data-bs-toggle="collapse" data-bs-target="#collapse2" aria-expanded="false" aria-controls="collapse2" href="{% url 'accounts:signup' %}"><img style="margin-right:5px; border-radius: 10rem; width: 3rem; height: 3rem;" src="https://img1.daumcdn.net/thumb/R1280x0/?fname=http://t1.daumcdn.net/brunch/service/user/7r5X/image/9djEiPBPMLu_IvCYyvRPwmZkM1g.jpg"></a>
-                <span style="margin-right:10px;">&nbsp;&nbsp;</span>
+              <a data-bs-toggle="collapse" data-bs-target="#collapse1" aria-expanded="false" aria-controls="collapse1"><img style="margin-right:5px; border-radius: 10rem; width: 3rem; height: 3rem;" src="https://img1.daumcdn.net/thumb/R1280x0/?fname=http://t1.daumcdn.net/brunch/service/user/7r5X/image/9djEiPBPMLu_IvCYyvRPwmZkM1g.jpg"></a>
+              <span style="margin-right:10px;">{{ user }}</span>
             {% endif %}
+          {% else %}
+            <a data-bs-toggle="collapse" data-bs-target="#collapse2" aria-expanded="false" aria-controls="collapse2" href="{% url 'accounts:signup' %}"><img style="margin-right:5px; border-radius: 10rem; width: 3rem; height: 3rem;" src="https://img1.daumcdn.net/thumb/R1280x0/?fname=http://t1.daumcdn.net/brunch/service/user/7r5X/image/9djEiPBPMLu_IvCYyvRPwmZkM1g.jpg"></a>
+            <span style="margin-right:10px;">&nbsp;&nbsp;</span>
+          {% endif %}
+        </div>
+     
+    </div>
+  </nav>
+  <div class="justify-content-center position-relative align-items-center my-5">
+    <div class="row">
+      <div class="col"></div>
+      <div class="col-4">
+        <form class="d-flex justify-content-center position-relative align-items-center my-3" method="POST" action="{% url 'search' %}">
+          {% csrf_token %}
+          <div class="search-bar rounded-pill p-3" style="color:teal;">
+            <i class="fs-6 bi bi-search"></i>
+            <input class="search-bar__input" style="input-color:tomato;" type="search" placeholder="         식당검색" name="searched" aria-label="Search"/>
           </div>
-        {% endblock nav %}
+        </form>
       </div>
-    </nav>
+      {% if request.user.is_authenticated %}
+        <div class="col d-flex justify-content-end align-items-center text-center">
+          <a href="{% url 'accounts:detail' user.pk %}" id="collapse1" class="m-2 collapse collapse-horizontal btn btn-outline-info text-white rounded-pill ">
+            <i class="bi bi-box-arrow-in-right">Profiile</i>
+          </a>
+          <a href="{% url 'accounts:logout' %}" id="collapse1" class="m-2 collapse collapse-horizontal btn btn-outline-warning rounded-pill text-white">
+            <i class="bi bi-box-arrow-right">Logout</i>
+          </a>
+        </div>
+      {% else %}
+        <div class="col d-flex justify-content-end align-items-center text-center me-5">
+          <a href="{% url 'accounts:signup' %}" id="collapse2" class="m-2 collapse collapse-horizontal btn btn-outline-info rounded-pill text-white ">
+            <i class="bi bi-box-arrow-in-right">Signup</i>
+          </a>
+          <a href="{% url 'accounts:login' %}" id="collapse2" class="m-2 collapse collapse-horizontal btn btn-outline-warning text-white rounded-pill ">
+            <i class="bi bi-box-arrow-right">Login</i>
+          </a>
+        </div>
+      {% endif %}
+    </div>
   </div>
+  {% endblock nav %}
   {% if messages %}
     {% for message in messages %}
       <div class="mb-0 alert alert-{{ message.tags }}">

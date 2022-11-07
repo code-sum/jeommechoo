@@ -7,16 +7,16 @@
 
     {% regroup reviews by user.username as dates_items %}
     <div class="jusitfy-content-center">
-      <div class="d-sm-flex container container-sm-none text-center">
+      <div class="d-sm-flex text-center" style="flex-wrap: wrap; justify-content: space-around;">
         {% for date in dates_items %}
-        <div class="d-sm-flex">
-          <div class="card row row-cols-2 g-1 m-3 justify-content-center justify-content-md-around align-items-center" style="width: 20rem; height: 17rem; position: relative; overflow: hidden; margin: 0;">
+        <div class="d-sm-flex text-center">
+          <div class="card m-0 row row-cols-2 g-1 m-3 justify-content-center justify-content-md-around align-items-center" style="width: 20rem; height: 17rem; position: relative; overflow: hidden; margin: 0;">
             {% for changelog in date.list %}
               <div class="col-6 text-center">
                 <img src="{{ changelog.image.url }}" alt="{{ changelog.image }}" class="g-4" style="border: 4px solid rgba(221, 177, 177, 0.396); border-radius: 1rem; position: relative; overflow: hidden;">
               </div>
               <div class="text-center" style="position: absolute; bottom: 6.89rem; right: 5rem;">
-                <button href="{% url 'accounts:detail' changelog.user.pk %}" class="btn btn-none rounded-pill fs-3 bg-info px-2 py-1 text-white text-decoration-none follow-font">{{ date.grouper }}</button>
+                <a href="{% url 'accounts:detail' changelog.user.pk %}" class="btn btn-none rounded-pill fs-5 bg-black px-2 py-1 text-white text-decoration-none follow-font">{{ date.grouper }}</a>
               </div>
             {% endfor %}
           </div>

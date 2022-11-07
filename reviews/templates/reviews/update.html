@@ -6,7 +6,7 @@
   <div class="background-size d-flex flex-column align-items-center justify-content-center">
     <div class="d-none d-md-block p-5 d-flex flex-column bg-white border border-2 border-opacity-75 border-start-0 border-end-0 rounded-4 border-secondary shadow-lg" style="width: 45rem;">
       <div class="text-center">
-        <h1 class="text-center mt-5 mb-3 fw-bold text-space">리뷰수정!</h1>
+        <h1 class="text-center mt-5 mb-3 fw-bold text-space">리뷰 수정</h1>
         <p>바르고 고운말 사용!</p>
         <form action="" method="POST" enctype="multipart/form-data">
           {% csrf_token %}
@@ -19,7 +19,7 @@
     </div>
     <div class="d-block d-md-none p-5 d-flex flex-column bg-white border border-2 border-opacity-75 border-start-0 border-end-0 rounded-4 border-secondary shadow-lg" style="width: 30rem;">
       <div class="text-center">
-        <h1 class="text-center mt-5 mb-3 fw-bold text-space">리뷰수정!</h1>
+        <h1 class="text-center mt-5 mb-3 fw-bold text-space">리뷰 수정</h1>
         <p>바르고 고운말 사용!</p>
         <form action="" method="POST" enctype="multipart/form-data">
           {% csrf_token %}
@@ -27,7 +27,7 @@
             {% bootstrap_form review_form %}
           </div>
           <div class="text-end">
-            {% bootstrap_button button_type="submit" content="수정" button_class="btn-outline-info"%}
+            {% bootstrap_button button_type="submit" content="수정" button_class="btn-outline-info rounded-pill"%}
           </div>
         </form>
       </div>

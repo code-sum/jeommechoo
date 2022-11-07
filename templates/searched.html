@@ -1,17 +1,22 @@
 {% extends 'base.html' %}
 
 {% block content %}
- 
+  <div class="d-flex">
     {% for restaurant in restaurants %}
-      <a href="{% url 'restaurants:detail' restaurant.pk %}">
-        {% if not restaurant.thumbnail %}   
-        <img src="https://archive.org/download/no-photo-available/no-photo-available.png" class="img-fluid rounded-top" style="width:400px; height:300px;" alt="">
-        {% else %}
-        <img src="{{ restaurant.thumbnail.url }}" class="img-fluid rounded-top" alt="">
-        {% endif %}
-      </a>
-      <p>{{ restaurant.name }}</p>
-      <br>
+     
+        <div class="d-flex flex-column m-5 p-3 shadow-sm" style="border: 3px solid #fea39d8c; border-radius: 3rem; background-color: #fbf0ef;">
+          <a href="{% url 'restaurants:detail' restaurant.pk %}" class="mb-4">
+            {% if not restaurant.thumbnail %}
+              <img src="https://archive.org/download/no-photo-available/no-photo-available.png" class="img-fluid rounded-5 shadow-sm" style="width:400px; height:300px;" alt="">
+            {% else %}
+              <img src="{{ restaurant.thumbnail.url }}" class="img-fluid rounded-5 shadow-sm" alt="">
+            {% endif %}
+          </a>
+          <h3 class="text-center follow-font">{{ restaurant.name }}</h3>
+          <br>
+        </div>
+
     {% endfor %}
-    <h3 class="mt-5 text-center">{{ text }}</h3>
+  </div>
+  <h3 class="mt-5 text-center">{{ text }}</h3>
 {% endblock %}
