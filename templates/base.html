@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <!-- Bootstrap Font Icon CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     <!-- Bootstrap CSS -->
@@ -21,17 +21,31 @@
   <body>
     <!--nav-->
     {% block nav %}
-      <div class="d-flex justify-content-center position-relative align-items-center my-3">
-        <div>
-          <form class="d-flex" method="POST" action="{% url 'search' %}">
-            {% csrf_token %}
-            <input class="form-control me-2" type="search" placeholder="식당이름 검색" name="searched" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">
-              <i class="bi bi-search"></i>
-            </button>
-          </form>
+      <div class="justify-content-center position-relative align-items-center my-3">
+        <div class="row">
+            <div class="col"></div>
+        <div class="col-4">
+            <form class="d-flex justify-content-center position-relative align-items-center my-3" method="POST" action="{% url 'search' %}">
+                {% csrf_token %}
+                <div class="search-bar" style="color:teal;" >
+                    <i class="bi bi-search"></i>
+                    <input class="search-bar__input" style="input-color:tomato;" type="search" placeholder="         식당검색" name="searched" aria-label="Search"/>
+                </div>
+            </form>
         </div>
-      </div>
+          {% if request.user.is_authenticated %}
+            <div class="col d-flex justify-content-end text-center me-5">
+                <a href="{% url 'accounts:detail' user.pk %}" id="collapse1" class="collapse collapse-horizontal btn btn-outline-info text-white rounded-pill "><i class="bi bi-box-arrow-in-right">Profiile</i></a>
+                <a href="{% url 'accounts:logout' %}" id="collapse1" class="collapse collapse-horizontal btn btn-outline-warning rounded-pill text-white"><i class="bi bi-box-arrow-right">Logout</i></a>
+            </div>
+        {% else %}
+            <div class="col d-flex justify-content-end text-center me-5">
+                <a href="{% url 'accounts:signup' %}" id="collapse2" class="collapse collapse-horizontal btn btn-outline-info rounded-pill text-white "><i class="bi bi-box-arrow-in-right">Signup</i></a>
+                <a href="{% url 'accounts:login' %}" id="collapse2" class="collapse collapse-horizontal btn btn-outline-warning text-white rounded-pill "><i class="bi bi-box-arrow-right">Login</i></a>
+            </div>
+        {% endif %}
+    </div>
+    </div>
 
       <nav class="navbar navbar-expand-lg" style="background-color:#F7D7C8;">
 
@@ -53,24 +67,27 @@
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'accounts:reviewlist' %}">리뷰목록</a>
               </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'developers' %}">입점문의</a>
+              </li>
             </ul>
+
             {% if request.user.is_authenticated %}
                 {% if user.profileimg %}
-                <a href="{% url 'accounts:detail' user.pk %}"><img src="{{ user.profileimg.url }}" style="margin-right:5px; border-radius: 10rem; width: 3rem; height: 3rem;"></a>
+                <a data-bs-toggle="collapse" data-bs-target="#collapse1" aria-expanded="false" aria-controls="collapse1"><img src="{{ user.profileimg.url }}" style="margin-right:5px; border-radius: 10rem; width: 3rem; height: 3rem;"></a>
                 <span class="" style="margin-right:10px;">&nbsp;&nbsp;{{ user }}</span>
                 {% else %}
-                <a href="{% url 'accounts:detail' user.pk %}"><img style="margin-right:5px; border-radius: 10rem; width: 3rem; height: 3rem;" src="https://img1.daumcdn.net/thumb/R1280x0/?fname=http://t1.daumcdn.net/brunch/service/user/7r5X/image/9djEiPBPMLu_IvCYyvRPwmZkM1g.jpg"></a>
+                <a data-bs-toggle="collapse" data-bs-target="#collapse1" aria-expanded="false" aria-controls="collapse1"><img style="margin-right:5px; border-radius: 10rem; width: 3rem; height: 3rem;" src="https://img1.daumcdn.net/thumb/R1280x0/?fname=http://t1.daumcdn.net/brunch/service/user/7r5X/image/9djEiPBPMLu_IvCYyvRPwmZkM1g.jpg"></a>
                 <span style="margin-right:10px;">{{ user }}</span>
-                {% endif %}
+              {% endif %}
             {% else %}
-                <a href="{% url 'accounts:signup' %}"><img style="margin-right:5px; border-radius: 10rem; width: 3rem; height: 3rem;" src="https://img1.daumcdn.net/thumb/R1280x0/?fname=http://t1.daumcdn.net/brunch/service/user/7r5X/image/9djEiPBPMLu_IvCYyvRPwmZkM1g.jpg"></a>
+                <a data-bs-toggle="collapse" data-bs-target="#collapse2" aria-expanded="false" aria-controls="collapse2" href="{% url 'accounts:signup' %}"><img style="margin-right:5px; border-radius: 10rem; width: 3rem; height: 3rem;" src="https://img1.daumcdn.net/thumb/R1280x0/?fname=http://t1.daumcdn.net/brunch/service/user/7r5X/image/9djEiPBPMLu_IvCYyvRPwmZkM1g.jpg"></a>
                 <span style="margin-right:10px;">&nbsp;&nbsp;</span>
             {% endif %}
           </div>
         {% endblock nav %}
       </div>
     </nav>
-
   </div>
   {% if messages %}
     {% for message in messages %}

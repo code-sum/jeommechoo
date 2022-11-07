@@ -1,7 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.contrib.auth.forms import AuthenticationForm
 from restaurants.models import Restaurant
 import random
+from django.contrib.auth import login as auth_login
+from django.contrib import messages
 
 def main(request):
     forms = AuthenticationForm()
@@ -27,8 +29,6 @@ def search(request):
         return render(request, 'searched.html', {'restaurants': restaurants,'text':text})
     else:
         return render(request, 'searched.html', {})
-
-
 def randomm(request):
     categogies = [
         '한식', '중식', '프렌치', '이탈리안', '스페니쉬', 
@@ -62,3 +62,6 @@ def randomm(request):
     }
 
     return render(request, 'random.html', context)
+
+def developers(request):
+    return render(request, 'developers.html')

@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+  <section>
+    <div class="container text-center mt-5">
+      <div class="text-center">
+        <h1 class="text-uppercase mb-3">입점문의</h1>
+        <h5 class="text-muted">점메추 입점을 원하는 분들은 개발팀에 연락해주세요</h5>
+        <p class="text-muted">(프로필 이미지를 누르면 Github 계정으로 연결됩니다)</p>
+      </div>
+      <div class="row mt-4">
+        <div class="col-lg-3">
+          <div>
+            <a href="https://github.com/wdahlia"><img class="mx-auto rounded-circle shadow" src="{% static 'images/team/1.jpg' %}" style="width:300px;" alt="..."/></a>
+            <div class="mt-3">
+              <h4>류진숙</h4>
+              <p class="text-muted">Developer</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <div>
+            <a href="https://github.com/wnsghd14"><img class="mx-auto rounded-circle shadow" src="{% static 'images/team/2.jpg' %}" style="width:300px;" alt="..."/></a>
+            <div class="mt-3">
+              <h4>최준홍</h4>
+              <p class="text-muted">Developer</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <div>
+            <a href="https://github.com/star2871"><img class="mx-auto rounded-circle shadow" src="{% static 'images/team/3.jpg' %}" style="width:300px;" alt="..."/></a>
+            <div class="mt-3">
+              <h4>송희수</h4>
+              <p class="text-muted">Developer</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <div>
+            <a href="https://github.com/code-sum"><img class="mx-auto rounded-circle shadow" src="{% static 'images/team/4.jpg' %}" style="width:300px;" alt="..."/></a>
+            <div class="mt-3">
+              <h4>이수경</h4>
+              <p class="text-muted">Developer</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    {% endblock content %}

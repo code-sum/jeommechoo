@@ -58,7 +58,7 @@
           <div class="px-1 text-center fw-bold follow-font">
             리뷰 개수
             <br>
-            <span id="followings-count">{{ user.followings.count }}</span>
+            <span id="followings-count">{{ review.count }}</span>
           </div>
         </div>
         <!-- 팔로우/팔로우취소 버튼 -->
@@ -104,7 +104,6 @@
     <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=7apalzu8wx"></script>
 
     <script>
-
       const like_restaurant = "{{ like_restaurant }}";
       const areaPoint = "{{ like_restaurant }}".replace(/&#x27;/g, "\"");
       const point = JSON.parse(areaPoint)
@@ -117,11 +116,11 @@
       };
 
       var map = new naver
-      .maps
-      .Map('map', mapOptions);
+        .maps
+        .Map('map', mapOptions);
 
       for (let area of point) {
-      
+
         var lat = area.address[0]
         var lng = area.address[1]
 
@@ -133,7 +132,7 @@
               .maps
               .LatLng(lat, lng),
             icon: {
-              url: '{% static 'images/marker.png' %}', //50, 68 크기의 원본 이미지
+              url: '{% static ' images / marker.png ' %}', //50, 68 크기의 원본 이미지
               size: new naver
                 .maps
                 .Size(50, 60),
@@ -147,10 +146,9 @@
                 .maps
                 .Point(12, 34)
             },
-            map: map,
+            map: map
           });
       }
-
     </script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
@@ -175,36 +173,36 @@
               }
             })
             .then((response) => {
-                const isFollowed = response.data.is_followed
-                const followBtn = document.querySelector('#follow-form > input[type=submit]')
-                if (isFollowed === true) {
-                  followBtn.value = '팔로우 취소'
-                  followBtn
-                    .classList
-                    .add('btn-danger')
-                  followBtn
-                    .classList
-                    .remove('btn-primary')
-                } else {
-                  followBtn.value = '팔로우'
-                  followBtn
-                    .classList
-                    .add('btn-primary')
-                  followBtn
-                    .classList
-                    .remove('btn-danger')
-                }
-                const followersCountTag = document.querySelector('#followers-count')
-                const followingsCountTag = document.querySelector('#followings-count')
-                const followersCount = response.data.followers_count
-                const followingsCount = response.data.followings_count
-                followersCountTag.innerText = followersCount
-                followingsCountTag.innerText = followingsCount
-              })
+              const isFollowed = response.data.is_followed
+              const followBtn = document.querySelector('#follow-form > input[type=submit]')
+              if (isFollowed === true) {
+                followBtn.value = '팔로우 취소'
+                followBtn
+                  .classList
+                  .add('btn-danger')
+                followBtn
+                  .classList
+                  .remove('btn-primary')
+              } else {
+                followBtn.value = '팔로우'
+                followBtn
+                  .classList
+                  .add('btn-primary')
+                followBtn
+                  .classList
+                  .remove('btn-danger')
+              }
+              const followersCountTag = document.querySelector('#followers-count')
+              const followingsCountTag = document.querySelector('#followings-count')
+              const followersCount = response.data.followers_count
+              const followingsCount = response.data.followings_count
+              followersCountTag.innerText = followersCount
+              followingsCountTag.innerText = followingsCount
+            })
             .catch((error) => {
               console.log(error.response)
             })
-        });
+          });
     </script>
     <script>
       $('#openCloseDiv').click(function () {

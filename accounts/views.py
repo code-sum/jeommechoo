@@ -100,6 +100,12 @@ def login(request):
             else:
                 messages.warning(request, "ID 또는 PASSWORD가 틀렸습니다.")
                 return redirect("main")
+        else:
+            form = AuthenticationForm()
+        context = {
+            'form': form
+        }
+        return render(request, 'accounts/login.html', context)
     else:
         messages.warning(request, "ID 또는 PASSWORD가 틀렸습니다.")
         return redirect("main")
