@@ -31,8 +31,8 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 DEBUG = os.getenv("DEBUG") == "True"
 
 if DEBUG: 
-    MEDIA_URL = "/media/"
-    MEDIA_ROOT = BASE_DIR / "media"
+    MEDIA_URL = "/images/"
+    MEDIA_ROOT = BASE_DIR / "images"
 
 else:   
     DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
