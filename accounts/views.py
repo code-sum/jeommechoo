@@ -24,7 +24,7 @@ def reviewlist(request):
     # reviews = Review.objects.filter(
     #     id__in=users,
     # ).values("user_id", "image")
-    reviews = Review.objects.order_by("pk")
+    reviews = Review.objects.order_by("user_id")
     context = {
         "users": users,
         # "user": user,

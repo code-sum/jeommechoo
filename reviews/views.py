@@ -13,7 +13,7 @@ class ReviewsView(ListView):
     paginate_by = 3
     context_object_name = 'reviews'
     template_name = 'reviews/index.html'
-    ordering = ['created_at']
+    ordering = ['-pk']
     
 def index(request):
     reviews = Review.objects.order_by("-pk")
