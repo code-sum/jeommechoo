@@ -119,10 +119,11 @@
           <i class="bi bi-telephone-forward-fill"></i>&nbsp;&nbsp;&nbsp;{{ restaurant.phone }}</p>
         <p class="follow-font text-secondary fw-semibold opacity-75 my-3">MENU</p>
         <pre class="mb-3">{{ restaurant.menupan }}</pre>
-
+        <a href="{% url 'reviews:create' restaurant.pk %}" class="text-decoration-none text-dark follow-font">
         <div class="card-footer rounded-pill shadow-sm mb-4" style="background-color: #F2E0E0;">
-          <a href="{% url 'reviews:create' restaurant.pk %}" class="text-decoration-none text-dark follow-font">리뷰작성</a>
+          리뷰작성
         </div>
+        </a>
       </div>
     </div>
 
