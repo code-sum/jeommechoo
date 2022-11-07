@@ -85,7 +85,7 @@
             {% for rev in review %}
               <div class="d-flex flex-column flex-wrap m-2 rounded-3" style="border: 2px solid #e8e4ddb1; box-shadow: 3px 4px 5px rgba(134, 123, 123, 0.665); background-color: #e8e4ddb1;">
                 <img src="{{ rev.image.url }}" alt="" style="border-radius: .4rem; width: 300px;">
-                <div class="card-footer py-3">{{ rev.content }}</div>
+                <div class="card-footer py-3 text-truncate">{{ rev.content }}</div>
               </div>
             {% endfor %}
           </div>

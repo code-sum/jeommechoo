@@ -9,9 +9,20 @@
   <!-- 로그인 div -->
   <div class="wrap">
     <ul class="img-box">
-      <li class="item" style="background-image: url({% static 'images/LE-SSERAFIM.jpeg' %});"></li>
-      <li class="item" style="background-image: url({% static 'images/idle.jpeg' %});"></li>
-      <li class="item" style="background-image: url({% static 'images/newjeans24.jpg' %}"></li>
+      <li class="item" style="background-image: url({% static 'images/5보쌈.jpg' %});"></li>
+      <li class="item" style="background-image: url({% static 'images/과일.jpg' %});"></li>
+      <li class="item" style="background-image: url({% static 'images/꼬치사진.jpg' %}"></li>
+      <li class="item" style="background-image: url({% static 'images/떡볶이.jpg' %}"></li>
+      <li class="item" style="background-image: url({% static 'images/생선스테이크.jpg' %}"></li>
+      <li class="item" style="background-image: url({% static 'images/음식들.jpg' %}"></li>
+      <li class="item" style="background-image: url({% static 'images/음식들2.jpg' %}"></li>
+      <li class="item" style="background-image: url({% static 'images/음식들3.jpg' %}"></li>
+      <li class="item" style="background-image: url({% static 'images/피자사진.jpg' %}"></li>
+      <li class="item" style="background-image: url({% static 'images/한식음식들.jpg' %}"></li>
+      <li class="item" style="background-image: url({% static 'images/과일2.jpg' %}"></li>
+      <li class="item" style="background-image: url({% static 'images/햄버거.jpg' %}"></li>
+      <li class="item" style="background-image: url({% static 'images/과일3.jpg' %}"></li>
+      <li class="item" style="background-image: url({% static 'images/음식들4.jpg' %}"></li>
     </ul>
   </div>
 
@@ -21,16 +32,20 @@
       <div class="container d-flex flex-column align-items-center">
         <h1 class="text-white mb-3">{{ request.user.username }}님 안녕하세요</h1>
         <div class="d-flex flex-column justify-content-center align-items-center">
-          <a href="{% url 'restaurants:index' %}" class="mb-2 btn btn-primary rounded-5 py-2 px-3 text-white">
+          <form action="{% url 'restaurants:index' %}" class="mb-1 rounded-5 px-3 text-white">
             <div class="d-flex justify-content-center align-items-center">
-              <i class="bi bi-house-door-fill"></i>
-              <h5 class="fw-bold ms-2 mb-0">h o m e</h5>
+              <button class="btn btn-outline-primary border border-0 rounded-1 fw-bolder text-white rounded-5 px-3 py-2">
+                h o m e
+              </button>
             </div>
-          </a>
-          <h5 class="text-black">OR</h5>
-          <a href="{% url 'accounts:logout' %}" class="btn btn-danger rounded-5 py-2 px-3">
-            <h5 class="fw-bold mb-0 text-white">l o g o u t ?</h5>
-          </a>
+          </form>
+          <form action="{% url 'accounts:logout' %}" class="rounded-5 px-3">
+            <div class="d-flex justify-content-center align-items-center">
+              <button class="btn btn-outline-light border border-0 rounded-1 fw-bolder text-danger rounded-5 px-3 py-2">
+                l o g o u t
+              </button>
+            </div>
+          </form>
         </div>
       </div>
       <!-- 로그아웃된 사용자에게 보이는 div -->
