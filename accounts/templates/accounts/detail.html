@@ -80,13 +80,21 @@
           </div>
         </div>
         <hr>
-        <div id="myReviewResult" class="container text-center" style="display: none;">
+        <!-- 내가 쓴 리뷰 버튼 누르면 나오는 목록 -->
+        <div id="myReviewResult" class="container" style="display: none;">
           <div class="text-center d-flex justify-content-center flex-wrap" style="">
             {% for rev in review %}
-              <div class="d-flex flex-column flex-wrap m-2 rounded-3" style="border: 2px solid #e8e4ddb1; box-shadow: 3px 4px 5px rgba(134, 123, 123, 0.665); background-color: #e8e4ddb1;">
-                <img src="{{ rev.image.url }}" alt="" style="border-radius: .4rem; width: 300px;">
-                <div class="card-footer py-3 text-truncate">{{ rev.content }}</div>
-              </div>
+              <a href="{% url 'reviews:detail' rev.pk %}" class="card d-flex flex-column m-2 rounded-3 text-truncate text-decoration-none" style="position: relative; height:350px; width: 250px; border: 2px solid #e8e4ddb1; box-shadow: 3px 4px 5px rgba(134, 123, 123, 0.665); background-color: #e8e4ddb1;">
+                <img src="{{ rev.image.url }}" alt="" style="border-radius: .4rem; width: 250px; filter: brightness(85%);" >
+                <div class="d-flex flex-column justify-content-between p-3">
+                  {% if not rev.user.profileimg %}
+                  <div class="text-start"><img src="https://img1.daumcdn.net/thumb/R1280x0/?fname=http://t1.daumcdn.net/brunch/service/user/7r5X/image/9djEiPBPMLu_IvCYyvRPwmZkM1g.jpg" alt="" style="width: 30px; height: 30px; border-radius: 10rem;">&nbsp;&nbsp;<span>{{ rev.user.username }}</span></div>
+                  {% else %}
+                  <div class="text-start"><img src="{{ rev.user.profileimg.url }}" alt="" style="width: 30px; height: 30px; border-radius: 10rem;">&nbsp;&nbsp;<span>{{ rev.user.username }}</span></div>
+                  {% endif %}
+                  <div class="mt-3 text-dark text-end text-truncate fw-bold follow-font" style="font-size: 15px;">{{ rev.content }}</div>
+                </div>
+              </a>
             {% endfor %}
           </div>
         </div>
@@ -132,7 +140,7 @@
               .maps
               .LatLng(lat, lng),
             icon: {
-              url: '{% static ' images / marker.png ' %}', //50, 68 크기의 원본 이미지
+              url: '{% static 'images/marker.png' %}', //50, 68 크기의 원본 이미지
               size: new naver
                 .maps
                 .Size(50, 60),

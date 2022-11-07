@@ -26,7 +26,15 @@
     </ul>
   </div>
 
-  <div class="background-size position-absolute d-flex align-items-center top-0">
+  <div class="background-size position-absolute d-flex flex-column justify-content-center align-items-center top-0">
+    <h1 class="text-center bg-white rounded-pill p-2 mb-3 opacity-75"><img src="{% static 'images/semi.png' %}" alt="" style="width: 200px; height: 45px;"></h1>
+    {% if not user.is_authenticated %}
+      <a class="text-center" href="{% url 'restaurants:index' %}">
+        <i class="bi bi-house-fill fs-2 text-white"></i>
+      </a>
+    
+
+    {% endif %}
     <!-- 로그인한 사용자에게 보이는 div -->
     {% if user.is_authenticated %}
       <div class="container d-flex flex-column align-items-center">
@@ -57,7 +65,7 @@
           <a href="{% url 'accounts:signup' %}" class="btn btn-success">회원가입</a>
           {% bootstrap_button button_class="btn btn-primary" button_type="submit" content="로그인" %}
         </form>
-        <a class="text-center" href="{% url 'restaurants:index' %}">Home</a>
+
       </div>
     {% endif %}
   </div>
