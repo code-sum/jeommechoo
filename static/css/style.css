@@ -190,9 +190,53 @@ body {
     -webkit-background-clip: text;
 
 }
+
+.rul-canvas {
+    transition: 2s;
+  }
+  
+.rul-button {
+    background: #febf00;
+    margin-top: 1rem;
+    padding: .8rem 1.8rem;
+    border: none;
+    font-size: 1.5rem;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: .2s;
+    cursor: pointer;
+  }
+  
+.rul-button:active {
+    background: #444;
+    color: #f9f9f9;
+  }
+
+.rul-div {
+    width: 380px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+  }
+  
+.rul-div::before {
+    content: "";
+    position: absolute;
+    width: 10px;
+    height: 50px;
+    border-radius: 5px;
+    background: #000;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 22;
+  }
+
 .aside-position {
     position: sticky;
-    top: 15rem;
+    top: 19rem;
     right: 10rem;
 }
 
@@ -273,3 +317,4 @@ body {
 .recommend-list {
     background-color: #E8E4DD;
 }
+
