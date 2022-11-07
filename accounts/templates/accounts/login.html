@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% load static %}
+{% load django_bootstrap5 %}
+
+<!-- 로그인 div -->
+<div class="background-size d-flex flex-column align-items-center justify-content-center">
+    <div class="d-flex flex-column bg-white border border-2 border border-opacity-75 border-start-0 border-end-0 rounded-4 border-secondary shadow-lg">
+        <h1 class="text-center mt-5 mb-3 fw-bold text-space">로그인</h1>
+        <form method="POST" class="p-5 border-dark">
+          {% csrf_token %}
+          {% bootstrap_form form %}
+          <div class="text-end">
+            {% bootstrap_button button_type="submit" content="로그인" button_class="btn btn-outline-info" %}
+          </div>
+        </form>
+      </div>
+  </div>
+{% endblock %}
