@@ -24,7 +24,7 @@
       <!-- 관리자에게만 보이는 식당등록버튼 -->
       {% if user.is_superuser %}
         <div class="me-3">
-          <a href="{% url 'restaurants:create' %}" class="btn rounded-pill" style="background-color: #FDED94">식당등록</a>
+          <a href="{% url 'restaurants:create' %}" class="btn rounded-pill me-5" style="background-color: #FDED94">식당등록</a>
         </div>
       {% endif %}
     </div>
@@ -117,7 +117,10 @@
           {% for ranker in rankers %}
             <div class="d-flex justify-content-between align-items-center follow-font">
               <p class="text-start m-1">{{ ranker.name }}
-              <div class="d-flex align-items-center"><i class="fs-6 bi bi-star-fill text-warning"></i>&nbsp;{{ ranker.avg_grade|floatformat:1 }}</p></div>
+                <div class="d-flex align-items-center">
+                  <i class="fs-6 bi bi-star-fill text-warning"></i>&nbsp;{{ ranker.avg_grade|floatformat:1 }}
+                </p>
+              </div>
             </div>
             <hr class="m-0">
           {% endfor %}
