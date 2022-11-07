@@ -25,13 +25,13 @@
         <div class="row">
             <div class="col"></div>
         <div class="col-4">
-          <form class="d-flex justify-content-center" method="POST" action="{% url 'search' %}">
-            {% csrf_token %}
-            <input class="form-control w-50"  type="search" placeholder="식당이름 검색" name="searched" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">
-              <i class="bi bi-search"></i>
-            </button>
-          </form>
+            <form class="d-flex justify-content-center position-relative align-items-center my-3" method="POST" action="{% url 'search' %}">
+                {% csrf_token %}
+                <div class="search-bar" style="color:teal;" >
+                    <i class="bi bi-search"></i>
+                    <input class="search-bar__input" style="input-color:tomato;" type="search" placeholder="         식당검색" name="searched" aria-label="Search"/>
+                </div>
+            </form>
         </div>
           {% if request.user.is_authenticated %}
             <div class="col d-flex justify-content-end text-center me-5">
