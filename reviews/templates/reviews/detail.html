@@ -57,9 +57,9 @@
         <br>
         <!-- 로그인한 유저만 댓글 등록할 수 있는 폼 -->
         {% if request.user.is_authenticated %}
-          <form action="{% url 'reviews:comment_create' review.pk %}" method="POST" class="m-sm-0 p-sm-0 container container-sm-none container-md row">
+          <form action="{% url 'reviews:comment_create' review.pk %}" method="POST" class=" m-sm-0 p-sm-0 container container-sm-none container-md row">
             {% csrf_token %}
-            <div class="align-middle p-0 col-10 col-md-9 col-lg-10">
+            <div class="align-middle p-0 col-10 col-md-9 col-lg-10 rounded-pill">
               {% bootstrap_form comment_form %}
             </div>
             <div class="align-middle p-0 col-2 col-md-3 col-lg-2 text-center">

@@ -57,12 +57,12 @@
           </ul>
 
           {% if request.user.is_authenticated %}
-            {% if user.profileimg %}
-              <a data-bs-toggle="collapse" data-bs-target="#collapse1" aria-expanded="false" aria-controls="collapse1"><img src="{{ user.profileimg.url }}" style="margin-right:5px; border-radius: 10rem; width: 3rem; height: 3rem;"></a>
-              <span class="" style="padding-right: 20px;">&nbsp;&nbsp;{{ user }}</span>
+            {% if request.user.profileimg %}
+              <a data-bs-toggle="collapse" data-bs-target="#collapse1" aria-expanded="false" aria-controls="collapse1"><img src="{{ request.user.profileimg.url }}" style="margin-right:5px; border-radius: 10rem; width: 3rem; height: 3rem;"></a>
+              <span class="" style="padding-right: 20px;">&nbsp;&nbsp;{{ request.user }}</span>
             {% else %}
               <a data-bs-toggle="collapse" data-bs-target="#collapse1" aria-expanded="false" aria-controls="collapse1"><img style="margin-right:5px; border-radius: 10rem; width: 3rem; height: 3rem;" src="https://img1.daumcdn.net/thumb/R1280x0/?fname=http://t1.daumcdn.net/brunch/service/user/7r5X/image/9djEiPBPMLu_IvCYyvRPwmZkM1g.jpg"></a>
-              <span style="margin-right:10px;">{{ user }}</span>
+              <span style="margin-right:10px;">{{ request.user }}</span>
             {% endif %}
           {% else %}
             <a data-bs-toggle="collapse" data-bs-target="#collapse2" aria-expanded="false" aria-controls="collapse2" href="{% url 'accounts:signup' %}"><img style="margin-right:5px; border-radius: 10rem; width: 3rem; height: 3rem;" src="https://img1.daumcdn.net/thumb/R1280x0/?fname=http://t1.daumcdn.net/brunch/service/user/7r5X/image/9djEiPBPMLu_IvCYyvRPwmZkM1g.jpg"></a>
@@ -72,7 +72,7 @@
      
     </div>
   </nav>
-  <div class="justify-content-center position-relative align-items-center my-5">
+  <div class="justify-content-center position-relative align-items-center mt-3">
     <div class="row">
       <div class="col"></div>
       <div class="col-4">
@@ -86,12 +86,14 @@
       </div>
       {% if request.user.is_authenticated %}
         <div class="col d-flex justify-content-end align-items-center text-center">
-          <a href="{% url 'accounts:detail' user.pk %}" id="collapse1" class="m-2 collapse collapse-horizontal btn btn-outline-info text-white rounded-pill ">
+            <div class="me-3">
+          <a href="{% url 'accounts:detail' request.user.pk %}" id="collapse1" class="m-2 collapse collapse-horizontal btn btn-outline-info text-white rounded-pill ">
             <i class="bi bi-box-arrow-in-right">Profiile</i>
           </a>
           <a href="{% url 'accounts:logout' %}" id="collapse1" class="m-2 collapse collapse-horizontal btn btn-outline-warning rounded-pill text-white">
             <i class="bi bi-box-arrow-right">Logout</i>
           </a>
+        </div>
         </div>
       {% else %}
         <div class="col d-flex justify-content-end align-items-center text-center me-5">
